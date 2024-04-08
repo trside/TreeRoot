@@ -1,0 +1,3 @@
+[submodule "TreeRoot/vendor/spdlog"]
+	path = TreeRoot/vendor/spdlog
+	url = https://github.com/gabime/spdlog

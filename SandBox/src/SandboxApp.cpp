@@ -1,6 +1,5 @@
 #include <TreeRoot.h>
 
-
 class Sandbox : public tr::Application
 {
 public:
