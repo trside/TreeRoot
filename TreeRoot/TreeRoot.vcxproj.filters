@@ -4,6 +4,9 @@
     <Filter Include="TreeRoot">
       <UniqueIdentifier>{39C2A73B-258F-0247-4EA8-F0EE3AD437D5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TreeRoot\Events">
+      <UniqueIdentifier>{FD933703-691F-A5C7-7230-28BCDE3A01C8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\TreeRoot.h" />
@@ -15,6 +18,18 @@
     </ClInclude>
     <ClInclude Include="src\TreeRoot\EntryPoint.h">
       <Filter>TreeRoot</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TreeRoot\Events\ApplicationEvent.h">
+      <Filter>TreeRoot\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TreeRoot\Events\Event.h">
+      <Filter>TreeRoot\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TreeRoot\Events\KeyEvent.h">
+      <Filter>TreeRoot\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TreeRoot\Events\MouseEvent.h">
+      <Filter>TreeRoot\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\TreeRoot\Log.h">
       <Filter>TreeRoot</Filter>

@@ -1,5 +1,10 @@
 #include "Application.h"
 
+#include "Events/Event.h"
+#include "Events/ApplicationEvent.h"
+
+#include "Log.h"
+
 namespace tr {
 
 	Application::Application()
@@ -11,6 +16,8 @@ namespace tr {
 
 	void Application::Run()
 	{
+		WindowResizedEvent e(800, 600);
+		TR_TRACE(e);
 		while (true);
 	}
 }

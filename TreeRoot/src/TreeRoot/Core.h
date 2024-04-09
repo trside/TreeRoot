@@ -10,7 +10,4 @@
 	#error TreeRoot only supports Windows!
 #endif
 
-namespace tr {
-
-	
-}
+#define BIT(x) (1 << x)
