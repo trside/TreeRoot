@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
-
 namespace tr {
 
 	class TR_API WindowResizedEvent : public Event

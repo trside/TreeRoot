@@ -2,9 +2,6 @@
 
 #include <TreeRoot/Core.h>
 
-#include <string>
-#include <functional>
-
 namespace tr {
 
 	enum class EventType
