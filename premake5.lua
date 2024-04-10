@@ -12,6 +12,11 @@ workspace "TreeRoot"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["GLFW"] = "TreeRoot/vendor/GLFW/include"
+
+include "TreeRoot/vendor/GLFW"
+
 project "TreeRoot"
     location "TreeRoot"
     kind "SharedLib"
@@ -32,7 +37,14 @@ project "TreeRoot"
     includedirs
     {
         "%{prj.name}/vendor/spdlog/include",
-        "%{prj.name}/src"
+        "%{prj.name}/src",
+        "%{IncludeDir.GLFW}"
+    }
+
+    links
+    {
+        "GLFW",
+        "opengl32.lib"
     }
 
     filter "system:windows"
@@ -42,7 +54,7 @@ project "TreeRoot"
 
         defines
         {
-            "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
+            "_CRT_SECURE_NO_WARNINGS",
             "TR_BUILD_DLL",
             "TR_PLATFORM_WINDOWS"
         }
@@ -53,7 +65,11 @@ project "TreeRoot"
         }
 
     filter "configurations:Debug"
-        defines "TR_DEBUG"
+        defines
+        {
+            "TR_DEBUG",
+            "TR_ENABLE_ASSERT"
+        }
         symbols "On"
 
     filter "configurations:Release"
@@ -96,7 +112,7 @@ project "Sandbox"
 
         defines
         {
-            "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
+            "_CRT_SECURE_NO_WARNINGS",
             "TR_PLATFORM_WINDOWS"
         }
 
@@ -106,8 +122,8 @@ project "Sandbox"
 
     filter "configurations:Release"
         defines "TR_RELEASE"
-        optimize "On"
+        optimize "Speed"
 
     filter "configurations:Dist"
         defines "TR_DIST"
-        optimize "On"
+        optimize "Speed"

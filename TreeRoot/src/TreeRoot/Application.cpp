@@ -5,22 +5,22 @@
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 
-#include "Log.h"
-
 namespace tr {
 
 	Application::Application()
 	{
+		m_Window = std::unique_ptr<Window>(Window::Create());
 	}
 	Application::~Application()
 	{
 	}
 
-	void Application::Run()
+	void Application::Run() 
 	{
-		WindowResizedEvent e(800, 600);
-		TR_TRACE(e);
-		while (true);
+		while (m_Running)
+		{
+			m_Window->OnUpdate();
+		}
 	}
 }
 

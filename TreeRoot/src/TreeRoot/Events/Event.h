@@ -53,7 +53,11 @@ namespace tr {
 			: m_Event(event) {}
 
 		template<typename T>
-		bool Dispatch(std::function<bool(T&)> func)		// func为事件回调函数指针
+		using EventFn = std::function<bool(T&)>;
+
+
+		template<typename T>
+		bool Dispatch(EventFn<T> func)		// func为事件回调函数指针
 		{
 			if (m_Event.GetEventType() == T::GetStaticType())	// 判断传入的事件回调函数是否与需要处理的事件类型相符合
 			{
