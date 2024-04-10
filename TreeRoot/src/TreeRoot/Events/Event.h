@@ -7,7 +7,7 @@ namespace tr {
 	enum class EventType
 	{
 		None = 0,
-		WindowClosed, WindowResized, WindowFocused, WindowLostFocus, WindowMoved,
+		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
 		AppTick, AppUpdate, AppRender,
 		KeyPressed, KeyReleased,
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
@@ -53,11 +53,10 @@ namespace tr {
 			: m_Event(event) {}
 
 		template<typename T>
-		using EventFn = std::function<bool(T&)>;
-
+		using EventFun = std::function<bool(T&)>;
 
 		template<typename T>
-		bool Dispatch(EventFn<T> func)		// func为事件回调函数指针
+		bool Dispatch(EventFun<T> func)		// func为事件回调函数指针
 		{
 			if (m_Event.GetEventType() == T::GetStaticType())	// 判断传入的事件回调函数是否与需要处理的事件类型相符合
 			{

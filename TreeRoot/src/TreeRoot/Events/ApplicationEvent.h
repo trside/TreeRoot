@@ -4,10 +4,10 @@
 
 namespace tr {
 
-	class TR_API WindowResizedEvent : public Event
+	class TR_API WindowResizeEvent : public Event
 	{
 	public:
-		WindowResizedEvent(unsigned int width, unsigned int height)
+		WindowResizeEvent(unsigned int width, unsigned int height)
 			: m_Width(width), m_Height(height) {}
 
 		inline unsigned int GetWidth() const { return m_Width; }
@@ -16,22 +16,22 @@ namespace tr {
 		std::string ToString() const override
 		{
 			std::stringstream ss;
-			ss << "WindowResizedEvent: " << m_Width << ", " << m_Height;
+			ss << "WindowResizeEvent: " << m_Width << ", " << m_Height;
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(WindowResized)
+		EVENT_CLASS_TYPE(WindowResize)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	private:
 		unsigned int m_Width, m_Height;
 	};
 
-	class TR_API WindowClosedEvent :public Event
+	class TR_API WindowCloseEvent :public Event
 	{
 	public:
-		WindowClosedEvent() {}
+		WindowCloseEvent() {}
 
-		EVENT_CLASS_TYPE(WindowClosed)
+		EVENT_CLASS_TYPE(WindowClose)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
