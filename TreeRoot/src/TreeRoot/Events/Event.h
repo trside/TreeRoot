@@ -42,8 +42,8 @@ namespace tr {
 		{
 			return GetCategoryFlags() & category;
 		}
-	protected:
-		bool m_Handled = false;
+
+		bool Handled = false;
 	};
 
 	class EventDispatcher		// 基于事件类型的事件处理器
@@ -60,7 +60,7 @@ namespace tr {
 		{
 			if (m_Event.GetEventType() == T::GetStaticType())	// 判断传入的事件回调函数是否与需要处理的事件类型相符合
 			{
-				m_Event.m_Handled = func(*(T*)&m_Event);	// *(T*)将m_Event的类型从Event*强转成T	|	将在此处进行事件处理
+				m_Event.Handled = func(*(T*)&m_Event);	// *(T*)将m_Event的类型从Event*强转成T	|	将在此处进行事件处理
 				return true;
 			}
 			return false;

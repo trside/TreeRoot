@@ -5,6 +5,9 @@
 
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
+
+#include "TreeRoot/LayerStack.h"
+
 namespace tr {
 
 	class TR_API Application
@@ -16,11 +19,17 @@ namespace tr {
 		void Run();
 
 		void OnEvent(Event& e);
+
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* overlay);
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+		
 		bool m_Running = true;
+
+		LayerStack m_LayerStack;
 	};
 	
 	Application* CreateApplication();

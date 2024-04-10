@@ -37,7 +37,6 @@ namespace tr {
 			EventCallbackFun EventCallback;
 		};
 		WindowData m_Data;
-
 	};
 }
 
