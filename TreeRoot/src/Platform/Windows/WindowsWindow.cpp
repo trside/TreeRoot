@@ -87,6 +87,7 @@ namespace tr
 				case GLFW_RELEASE:
 				{
 					KeyReleasedEvent e(key);
+					data.EventCallback(e);
 					break;
 				}
 				case GLFW_REPEAT:
@@ -112,6 +113,7 @@ namespace tr
 				case GLFW_RELEASE:
 				{
 					MouseButtonReleasedEvent e(button);
+					data.EventCallback(e);
 					break;
 				}
 				case GLFW_REPEAT:
@@ -121,6 +123,13 @@ namespace tr
 				}
 			}
 		});
+
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int codepoint)
+			{
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+				KeyTypedEvent e(codepoint);
+				data.EventCallback(e);
+			});
 
 		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos)
 		{

@@ -26,7 +26,7 @@ namespace tr {
 		unsigned int m_Width, m_Height;
 	};
 
-	class TR_API WindowCloseEvent :public Event
+	class TR_API WindowCloseEvent : public Event
 	{
 	public:
 		WindowCloseEvent() {}
@@ -51,7 +51,7 @@ namespace tr {
 		AppUpdateEvent() {}
 
 		EVENT_CLASS_TYPE(AppUpdate)
-			EVENT_CLASS_CATEGORY(EventCategoryApplication)
+		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
 	class TR_API AppRenderEvent : public Event
@@ -60,6 +60,6 @@ namespace tr {
 		AppRenderEvent() {}
 
 		EVENT_CLASS_TYPE(AppRender)
-			EVENT_CLASS_CATEGORY(EventCategoryApplication)
+		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 }

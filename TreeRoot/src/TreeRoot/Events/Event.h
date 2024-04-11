@@ -9,7 +9,7 @@ namespace tr {
 		None = 0,
 		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
 		AppTick, AppUpdate, AppRender,
-		KeyPressed, KeyReleased,
+		KeyPressed, KeyReleased, KeyTyped,
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
 	};
 
@@ -58,7 +58,7 @@ namespace tr {
 		template<typename T>
 		bool Dispatch(EventFun<T> func)		// func为事件回调函数指针
 		{
-			if (m_Event.GetEventType() == T::GetStaticType())	// 判断传入的事件回调函数是否与需要处理的事件类型相符合
+			if (m_Event.GetEventType() == T::GetStaticType())	// 判断传入的事件回调函数是否与**该dispatch函数**需要处理的事件类型相符合
 			{
 				m_Event.Handled = func(*(T*)&m_Event);	// *(T*)将m_Event的类型从Event*强转成T	|	将在此处进行事件处理
 				return true;
