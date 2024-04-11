@@ -15,9 +15,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "TreeRoot/vendor/GLFW/include"
 IncludeDir["Glad"] = "TreeRoot/vendor/Glad/include"
+IncludeDir["Imgui"] = "TreeRoot/vendor/imgui"
 
 include "TreeRoot/vendor/GLFW"
 include "TreeRoot/vendor/Glad"
+include "TreeRoot/vendor/imgui"
 
 project "TreeRoot"
     location "TreeRoot"
@@ -41,14 +43,16 @@ project "TreeRoot"
         "%{prj.name}/vendor/spdlog/include",
         "%{prj.name}/src",
         "%{IncludeDir.GLFW}",
-        "%{IncludeDir.Glad}"
+        "%{IncludeDir.Glad}",
+        "%{IncludeDir.Imgui}"
     }
 
     links
     {
         "GLFW",
         "Glad",
-        "opengl32.lib"
+        "opengl32.lib",
+        "Imgui"
     }
 
     filter "system:windows"
@@ -72,7 +76,7 @@ project "TreeRoot"
         defines
         {
             "TR_DEBUG",
-            "TR_ENABLE_ASSERT"
+            "TR_ENABLE_ASSERTS"
         }
         buildoptions "/MDd"
         symbols "On"

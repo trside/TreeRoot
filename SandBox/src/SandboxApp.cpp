@@ -12,7 +12,7 @@ public:
 
 	void OnEvent(tr::Event& e) override
 	{
-		TR_TRACE("{0}", e);
+		//TR_TRACE("{0}", e);
 	}
 };
 
@@ -22,6 +22,7 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
+		PushOverlay(new tr::ImGuiLayer());
 	}
 	~Sandbox()
 	{
