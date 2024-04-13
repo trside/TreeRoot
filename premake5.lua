@@ -1,14 +1,14 @@
 workspace "TreeRoot"
     architecture "x64"
 
+    startproject "Sandbox"
+
     configurations
     {
         "Debug",
         "Release",
         "Dist"
     }
-
-    startproject "Sandbox"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
@@ -25,6 +25,7 @@ project "TreeRoot"
     location "TreeRoot"
     kind "SharedLib"
     language "C++"
+    staticruntime "off"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -57,7 +58,6 @@ project "TreeRoot"
 
     filter "system:windows"
         cppdialect "C++20"
-        staticruntime "On"
         systemversion "latest"
 
         defines
@@ -69,32 +69,29 @@ project "TreeRoot"
 
         postbuildcommands
         {
-            ("{COPYDIR} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+            ("{COPYDIR} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
         }
 
     filter "configurations:Debug"
-        defines
-        {
-            "TR_DEBUG",
-            "TR_ENABLE_ASSERTS"
-        }
-        buildoptions "/MDd"
+        defines "TR_DEBUG"
+        runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
         defines "TR_RELEASE"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "On"
 
     filter "configurations:Dist"
         defines "TR_DIST"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "On"
         
 project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
+    staticruntime "off"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -118,7 +115,6 @@ project "Sandbox"
 
     filter "system:windows"
         cppdialect "C++20"
-        staticruntime "On"
         systemversion "latest"
 
         defines
@@ -129,15 +125,15 @@ project "Sandbox"
 
     filter "configurations:Debug"
         defines "TR_DEBUG"
-        buildoptions "/MDd"
+        runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
         defines "TR_RELEASE"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "Speed"
 
     filter "configurations:Dist"
         defines "TR_DIST"
-        buildoptions "/MD"
+        runtime "Release"
         optimize "Speed"

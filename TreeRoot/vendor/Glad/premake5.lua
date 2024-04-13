@@ -24,23 +24,19 @@ project "Glad"
 
 	filter "configurations:Debug"
 		runtime "Debug"
-		buildoptions "/MDd"
 		symbols "On"
 
 	filter { "system:windows", "configurations:Debug-AS" }	
 		runtime "Debug"
-		buildoptions "/MDd"
 		symbols "On"
 		sanitize { "Address" }
 		flags { "NoRuntimeChecks", "NoIncrementalLink" }
 
 	filter "configurations:Release"
 		runtime "Release"
-		buildoptions "/MD"
 		optimize "Speed"
 
     filter "configurations:Dist"
 		runtime "Release"
-		buildoptions "/MD"
 		optimize "Speed"
         symbols "Off"

@@ -4,6 +4,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include "TreeRoot/Input.h"
+
 namespace tr {
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -61,6 +63,7 @@ namespace tr {
 			for(Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 			m_Window->OnUpdate();
+			TR_CORE_TRACE("{0}, {1}", Input::GetMouseX(), Input::GetMouseY());
 		}
 	}
 
