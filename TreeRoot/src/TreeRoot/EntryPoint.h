@@ -7,9 +7,9 @@ extern tr::Application* tr::CreateApplication();
 int main(int argc, char** argv)
 {
 	tr::Log::Init();
-	TR_CORE_WARN("ruaaaa!");
-	TR_ERROR("nooooo");
 	TR_INFO("hello");
+	TR_ERROR("nooooo");
+	TR_CORE_WARN("ruaaaa!");
 
 	auto app = tr::CreateApplication();
 	app->Run();

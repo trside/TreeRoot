@@ -4,6 +4,9 @@
 
 #include "TreeRoot/Core.h"
 
+#include "TreeRoot/KeyCodes.h"
+#include "TreeRoot/MouseButtonCodes.h"
+
 namespace tr {
 
 	class TR_API Input

@@ -2,7 +2,7 @@
 
 #include "Application.h"
 
-#include <GLFW/glfw3.h>
+#include <GLFW/glfw3.h>		// Temporary
 
 #include "TreeRoot/Input.h"
 
@@ -32,7 +32,7 @@ namespace tr {
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 		/*===========================================*/
 
-		TR_CORE_TRACE("{0}", e);
+		// TR_CORE_TRACE("{0}", e);
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)		// 事件传递方向在层栈中为自顶向下
 		{
@@ -54,6 +54,8 @@ namespace tr {
 		overlay->OnAttach();
 	}
 
+	
+
 	void Application::Run() 
 	{
 		while (m_Running)
@@ -63,7 +65,17 @@ namespace tr {
 			for(Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 			m_Window->OnUpdate();
-			TR_CORE_TRACE("{0}, {1}", Input::GetMouseX(), Input::GetMouseY());
+
+			static bool IsMouseButton1Holding;
+			if (!Input::IsMouseButtonPressed(TR_MOUSE_BUTTON_1))
+			{
+				IsMouseButton1Holding = false;
+			}
+			if (Input::IsKeyPressed(TR_KEY_E) && Input::IsMouseButtonPressed(TR_MOUSE_BUTTON_1) && !IsMouseButton1Holding)
+			{
+				TR_CORE_TRACE("Clicked at ({0}, {1}).", Input::GetMouseX(), Input::GetMouseY());
+				IsMouseButton1Holding = true;
+			}
 		}
 	}
 
