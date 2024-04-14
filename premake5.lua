@@ -16,6 +16,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "TreeRoot/vendor/GLFW/include"
 IncludeDir["Glad"] = "TreeRoot/vendor/Glad/include"
 IncludeDir["Imgui"] = "TreeRoot/vendor/imgui"
+IncludeDir["glm"] = "TreeRoot/vendor/glm/glm"
 
 group "Dependencies"
     include "TreeRoot/vendor/GLFW"
@@ -38,7 +39,9 @@ project "TreeRoot"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/vendor/glm/glm/**.hpp",
+        "%{prj.name}/vendor/glm/glm/**.inl"
     }
 
     includedirs
@@ -47,7 +50,8 @@ project "TreeRoot"
         "%{prj.name}/src",
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
-        "%{IncludeDir.Imgui}"
+        "%{IncludeDir.Imgui}",
+        "%{IncludeDir.glm}"
     }
 
     links

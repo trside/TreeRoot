@@ -7,3 +7,6 @@
 [submodule "TreeRoot/vendor/imgui"]
 	path = TreeRoot/vendor/imgui
 	url = C:\\Users\\qwert\\Desktop\\00\\imgui
+[submodule "TreeRoot/vendor/glm"]
+	path = TreeRoot/vendor/glm
+	url = https://github.com/icaven/glm
