@@ -7,6 +7,7 @@
 #include "Events/ApplicationEvent.h"
 
 #include "TreeRoot/LayerStack.h"
+#include "TreeRoot/Imgui/ImGuiLayer.h"
 
 namespace tr {
 
@@ -33,6 +34,7 @@ namespace tr {
 		bool m_Running = true;
 
 		LayerStack m_LayerStack;
+		ImGuiLayer* m_ImGuiLayer;
 
 		static Application* s_Instance;
 	};

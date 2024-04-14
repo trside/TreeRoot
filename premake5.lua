@@ -48,6 +48,7 @@ project "TreeRoot"
     {
         "%{prj.name}/vendor/spdlog/include",
         "%{prj.name}/src",
+        "%{prj.name}/vendor",
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
         "%{IncludeDir.Imgui}",
