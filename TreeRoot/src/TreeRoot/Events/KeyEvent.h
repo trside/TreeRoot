@@ -4,7 +4,7 @@
 
 namespace tr {
 
-	class TR_API KeyEvent : public Event
+	class KeyEvent : public Event
 	{
 	public:
 		inline int GetKeyCode() const { return m_KeyCode; }
@@ -17,7 +17,7 @@ namespace tr {
 		int m_KeyCode;
 	};
 
-	class TR_API KeyPressedEvent : public KeyEvent
+	class KeyPressedEvent : public KeyEvent
 	{
 	public:
 		KeyPressedEvent(int keycode, int repeatCount = 0)
@@ -36,7 +36,7 @@ namespace tr {
 		int m_RepeatCount;
 	};
 
-	class TR_API KeyReleasedEvent : public KeyEvent
+	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
 		KeyReleasedEvent(int keycode)
@@ -52,7 +52,7 @@ namespace tr {
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
 
-	class TR_API KeyTypedEvent : public KeyEvent
+	class KeyTypedEvent : public KeyEvent
 	{
 	public:
 		KeyTypedEvent(int keycode)

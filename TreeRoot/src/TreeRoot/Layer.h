@@ -5,7 +5,7 @@
 
 namespace tr {
 
-	class TR_API Layer
+	class Layer
 	{
 	public:
 		Layer(const std::string& debugname = "Layer");

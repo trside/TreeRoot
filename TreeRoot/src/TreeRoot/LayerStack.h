@@ -5,7 +5,7 @@
 
 namespace tr {
 
-    class TR_API LayerStack : public Layer
+    class LayerStack : public Layer
     {
     public:
         LayerStack();

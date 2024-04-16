@@ -7,11 +7,11 @@
 #include "Events/ApplicationEvent.h"
 
 #include "TreeRoot/LayerStack.h"
-#include "TreeRoot/Imgui/ImGuiLayer.h"
+#include "TreeRoot/ImGui/ImGuiLayer.h"
 
 namespace tr {
 
-	class TR_API Application
+	class Application
 	{
 	public:
 		Application();

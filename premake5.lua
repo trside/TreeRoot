@@ -1,6 +1,5 @@
 workspace "TreeRoot"
     architecture "x64"
-
     startproject "Sandbox"
 
     configurations
@@ -8,6 +7,11 @@ workspace "TreeRoot"
         "Debug",
         "Release",
         "Dist"
+    }
+
+    defines
+    {
+        "_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
     }
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
@@ -19,16 +23,15 @@ IncludeDir["Imgui"] = "TreeRoot/vendor/imgui"
 IncludeDir["glm"] = "TreeRoot/vendor/glm/glm"
 
 group "Dependencies"
-    include "TreeRoot/vendor/GLFW"
-    include "TreeRoot/vendor/Glad"
-    include "TreeRoot/vendor/imgui"
+    include "TreeRoot/vendor"
 group ""
 
 project "TreeRoot"
     location "TreeRoot"
-    kind "SharedLib"
+    kind "StaticLib"
     language "C++"
-    staticruntime "off"
+    cppdialect "C++20"
+    staticruntime "on"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -64,12 +67,10 @@ project "TreeRoot"
     }
 
     filter "system:windows"
-        cppdialect "C++20"
         systemversion "latest"
 
         defines
         {
-            "_CRT_SECURE_NO_WARNINGS",
             "TR_BUILD_DLL",
             "TR_PLATFORM_WINDOWS"
         }
@@ -98,7 +99,8 @@ project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
-    staticruntime "off"
+    cppdialect "C++20"
+    staticruntime "on"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -120,8 +122,7 @@ project "Sandbox"
         "TreeRoot"
     }
 
-    filter "system:windows"
-        cppdialect "C++20"
+    filter "system:windows" 
         systemversion "latest"
 
         defines

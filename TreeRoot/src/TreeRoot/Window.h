@@ -17,7 +17,7 @@ namespace tr {
 			:Title(title), Width(width), Height(height) {}
 	};
 
-	class TR_API Window
+	class Window
 	{
 	public:
 		using EventCallbackFun = std::function<void(Event&)>;

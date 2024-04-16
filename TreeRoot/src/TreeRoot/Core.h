@@ -1,10 +1,14 @@
 #pragma once
 
 #ifdef TR_PLATFORM_WINDOWS
-	#ifdef TR_BUILD_DLL
-		#define TR_API __declspec(dllexport)
-	#else
-		#define TR_API __declspec(dllimport)
+	#ifdef TR_DYNAMIC_LINK
+		#ifdef TR_BUILD_DLL
+			#define TR_API __declspec(dllexport)
+		#else
+			#define TR_API __declspec(dllimport)
+		#endif
+	#else 
+		#define TR_API
 	#endif
 #else 
 	#error TreeRoot only supports Windows!

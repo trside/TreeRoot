@@ -6,13 +6,17 @@ public:
 	ExampleLayer()
 		:Layer("Example") {}
 
-	void OnUpdate() override
+	virtual void OnUpdate() override
 	{
 	}
 
-	void OnEvent(tr::Event& e) override
+	virtual void OnEvent(tr::Event& e) override
 	{
 		//TR_TRACE("{0}", e);
+	}
+
+	virtual void OnImGuiRender() override
+	{
 	}
 };
 
