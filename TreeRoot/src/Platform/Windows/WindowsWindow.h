@@ -2,7 +2,8 @@
 
 #include "TreeRoot/Window.h"
 
-#include <glad/glad.h>
+#include "TreeRoot/Renderer/RendererContext.h"
+
 #include <GLFW/glfw3.h>
 
 namespace tr {
@@ -39,6 +40,7 @@ namespace tr {
 			EventCallbackFun EventCallback;
 		};
 		WindowData m_Data;
+		RendererContext* m_Context;
 	};
 }
 

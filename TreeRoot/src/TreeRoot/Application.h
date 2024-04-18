@@ -37,6 +37,9 @@ namespace tr {
 		ImGuiLayer* m_ImGuiLayer;
 
 		static Application* s_Instance;
+
+		/* Temporary */
+		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
 	};
 	
 	Application* CreateApplication();
