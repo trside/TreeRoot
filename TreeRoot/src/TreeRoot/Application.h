@@ -9,6 +9,8 @@
 #include "TreeRoot/LayerStack.h"
 #include "TreeRoot/ImGui/ImGuiLayer.h"
 
+#include "TreeRoot/Renderer/Shader.h"
+
 namespace tr {
 
 	class Application
@@ -40,6 +42,7 @@ namespace tr {
 
 		/* Temporary */
 		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+		std::unique_ptr<Shader> m_Shader;
 	};
 	
 	Application* CreateApplication();

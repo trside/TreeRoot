@@ -2,10 +2,13 @@
 
 #include "Application.h"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>		// Temporary
-
 #include "TreeRoot/Input.h"
+
+/* Temporary */
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include "TreeRoot//Renderer/Shader.h"
+#include "Platform/OpenGL/OpenGLShader.h"
 
 namespace tr {
 
@@ -21,6 +24,29 @@ namespace tr {
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
+
+		std::string vertexSource = R"(
+			#version 460 core
+			
+			layout(location = 0)in vec3 i_Position;
+			
+			void main()
+			{
+				gl_Position = vec4(i_Position, 1.0);
+			}
+		)";
+		std::string fragmentSource = R"(
+			#version 460 core
+			
+			out vec4 color;
+			
+			void main()
+			{
+				color = vec4(0.0, 1.0, 0.0, 1.0);
+			}
+		)";
+
+		m_Shader.reset(new OpenGLShader(vertexSource, fragmentSource));
 
 		glGenBuffers(1, &m_VertexArray);
 		glBindVertexArray(m_VertexArray);
@@ -84,6 +110,7 @@ namespace tr {
 		{
 			glClear(GL_COLOR_BUFFER_BIT);	// Temporary
 
+			m_Shader->Bind();
 			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 
 			for(Layer* layer : m_LayerStack)
