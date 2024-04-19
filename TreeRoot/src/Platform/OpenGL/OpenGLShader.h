@@ -7,7 +7,7 @@ namespace tr {
     {
     public:
         OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource);
-        ~OpenGLShader();
+        virtual ~OpenGLShader();
 
         virtual void Bind() const override;
         virtual void Unbind() const override;

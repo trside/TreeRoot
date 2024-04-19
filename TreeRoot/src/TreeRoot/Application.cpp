@@ -7,8 +7,6 @@
 /* Temporary */
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "TreeRoot//Renderer/Shader.h"
-#include "Platform/OpenGL/OpenGLShader.h"
 
 namespace tr {
 
@@ -29,46 +27,55 @@ namespace tr {
 			#version 460 core
 			
 			layout(location = 0)in vec3 i_Position;
+			layout(location = 1)in vec4 i_Color;
+			out vec4 v_Color;
 			
 			void main()
 			{
 				gl_Position = vec4(i_Position, 1.0);
+				v_Color = i_Color;
 			}
 		)";
 		std::string fragmentSource = R"(
 			#version 460 core
 			
+			in vec4 v_Color;
 			out vec4 color;
 			
 			void main()
 			{
-				color = vec4(0.0, 1.0, 0.0, 1.0);
+				color = v_Color;
 			}
 		)";
 
-		m_Shader.reset(new OpenGLShader(vertexSource, fragmentSource));
+		m_Shader.reset(Shader::Create(vertexSource, fragmentSource));
 
-		glGenBuffers(1, &m_VertexArray);
-		glBindVertexArray(m_VertexArray);
+		m_VertexArray.reset(VertexArray::Create());
 
-		glGenBuffers(1, &m_VertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
-		float vertices[3 * 3] = {
-			-0.5, -0.5,  0.0,
-			 0.5, -0.5,  0.0,
-			 0.0,  0.5,  0.0
+		BufferLayout layout = {
+			{ ShaderDataType::Float3, "i_Position" },
+			{ ShaderDataType::Float4, "i_Color" }
 		};
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+		std::shared_ptr<VertexBuffer> vertexBuffer;
+		std::shared_ptr<IndexBuffer> indexBuffer;
 
-		glGenBuffers(1, &m_IndexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
+		float vertices[3 * (4 + 3)] = {
+			-0.5, -0.5,  0.0,  1.0,  0.5,  1.0,  1.0,
+			 0.5, -0.5,  0.0,  1.0,  0.5,  1.0,  1.0,
+			 0.0,  0.5,  0.0,  1.0,  0.5,  1.0,  1.0
+		};
+
+		vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+		vertexBuffer->SetLayout(layout);
+		m_VertexArray->AddVertexBuffer(vertexBuffer);
+		
 		unsigned int indices[3] = {
 			0, 1, 2
 		};
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+		indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(unsigned int)));
+		m_VertexArray->SetIndexBuffer(indexBuffer);
 	}
 	Application::~Application()
 	{
@@ -111,6 +118,7 @@ namespace tr {
 			glClear(GL_COLOR_BUFFER_BIT);	// Temporary
 
 			m_Shader->Bind();
+			m_VertexArray->Bind();
 			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 
 			for(Layer* layer : m_LayerStack)

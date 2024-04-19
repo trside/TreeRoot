@@ -10,6 +10,8 @@
 #include "TreeRoot/ImGui/ImGuiLayer.h"
 
 #include "TreeRoot/Renderer/Shader.h"
+#include "TreeRoot/Renderer/VertexArray.h"
+#include "TreeRoot/Renderer/Buffers.h"
 
 namespace tr {
 
@@ -41,8 +43,8 @@ namespace tr {
 		static Application* s_Instance;
 
 		/* Temporary */
-		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
 		std::unique_ptr<Shader> m_Shader;
+		std::unique_ptr<VertexArray> m_VertexArray;
 	};
 	
 	Application* CreateApplication();
