@@ -20,7 +20,7 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "TreeRoot/vendor/GLFW/include"
 IncludeDir["Glad"] = "TreeRoot/vendor/Glad/include"
 IncludeDir["Imgui"] = "TreeRoot/vendor/imgui"
-IncludeDir["glm"] = "TreeRoot/vendor/glm/glm"
+IncludeDir["glm"] = "TreeRoot/vendor/glm"
 
 group "Dependencies"
     include "TreeRoot/vendor"
@@ -114,7 +114,9 @@ project "Sandbox"
     includedirs
     {
         "TreeRoot/vendor/spdlog/include",
-        "TreeRoot/src"
+        "TreeRoot/src",
+        "TreeRoot/vendor",
+        "%{IncludeDir.glm}"
     }
 
     links

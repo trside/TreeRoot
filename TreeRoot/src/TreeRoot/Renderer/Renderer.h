@@ -1,19 +1,19 @@
 #pragma once
 
-namespace tr {
+#include "RendererAPI.h"
 
-	enum class RendererAPI
-	{
-		None = 0, OpenGL
-	};
+namespace tr {
 
 	class Renderer
 	{
 	public:
-		static inline RendererAPI GetCurrentAPI() { return s_RendererAPI; }
-		static void SetAPI(RendererAPI api);
-	private:
-		static RendererAPI s_RendererAPI;
+		static inline const RendererAPI::API GetCurrentAPI() { return RendererAPI::GetAPI(); }
+		static void SetAPI();
+
+		static void BeginScene();
+		static void EndScene();
+
+		static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
 	};
 
 }

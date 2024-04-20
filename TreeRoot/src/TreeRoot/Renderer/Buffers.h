@@ -1,9 +1,16 @@
 #pragma once
 
 #include "TreeRoot/Core.h"
-#include "TreeRoot/Renderer/Shader.h"
 
 namespace tr {
+
+	enum class ShaderDataType : unsigned int
+	{
+		Float, Float2, Float3, Float4,
+		Int, Int2, Int3, Int4,
+		Bool,
+		Mat3, Mat4
+	};
 
 	static unsigned int GetSizeOfShaderDataType(ShaderDataType type)
 	{

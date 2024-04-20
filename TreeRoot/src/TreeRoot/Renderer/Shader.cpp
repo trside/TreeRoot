@@ -10,8 +10,8 @@ namespace tr {
     {
 		switch (Renderer::GetCurrentAPI())
 		{
-			case RendererAPI::None:		TR_CORE_ASSERT(false, "RendererAPI::None") return nullptr;
-			case RendererAPI::OpenGL:	return new OpenGLShader(vertexSource, fragmentSource);
+			case RendererAPI::API::None:	TR_CORE_ASSERT(false, "RendererAPI::None") return nullptr;
+			case RendererAPI::API::OpenGL:	return new OpenGLShader(vertexSource, fragmentSource);
 		}
 		TR_CORE_ASSERT(false, "Unknown renderer API!");
 

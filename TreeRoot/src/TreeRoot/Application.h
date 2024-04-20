@@ -44,7 +44,7 @@ namespace tr {
 
 		/* Temporary */
 		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<VertexArray> m_VertexArray;
+		std::shared_ptr<VertexArray> m_VertexArray;
 	};
 	
 	Application* CreateApplication();

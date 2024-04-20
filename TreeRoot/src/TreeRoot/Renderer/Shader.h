@@ -18,14 +18,6 @@ typedef glm::mat4 Mat4;
 */
 namespace tr {
 
-	enum class ShaderDataType : unsigned int
-	{
-		Float, Float2, Float3, Float4,
-		Int, Int2, Int3, Int4,
-		Bool,
-		Mat3, Mat4
-	};
-
 	class Shader
 	{
 	public:

@@ -8,6 +8,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "TreeRoot/Renderer/Renderer.h"
+#include "TreeRoot/Renderer/RenderCommand.h"
+
 namespace tr {
 
 	Application* Application::s_Instance = nullptr;
@@ -115,11 +118,18 @@ namespace tr {
 	{
 		while (m_Running)
 		{
-			glClear(GL_COLOR_BUFFER_BIT);	// Temporary
+			//glClear(GL_COLOR_BUFFER_BIT);	// Temporary
+			RenderCommand::SetClearColor({ 1.0, 1.0, 0.0, 1.0 });
+			RenderCommand::Clear();
+
+			Renderer::BeginScene();
 
 			m_Shader->Bind();
 			m_VertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+			//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+			Renderer::Submit(m_VertexArray);
+
+			Renderer::EndScene();
 
 			for(Layer* layer : m_LayerStack)
 				layer->OnUpdate();

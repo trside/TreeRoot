@@ -10,10 +10,11 @@ namespace tr {
 	{
 		switch (Renderer::GetCurrentAPI())
 		{
-			case RendererAPI::None:		TR_CORE_ASSERT(false, "RendererAPI::None") return nullptr;
-			case RendererAPI::OpenGL:	return new OpenGLVertexBuffer(vertices, size);
+			case RendererAPI::API::None:	TR_CORE_ASSERT(false, "RendererAPI::None") return nullptr;
+			case RendererAPI::API::OpenGL:	return new OpenGLVertexBuffer(vertices, size);
 		}
 		TR_CORE_ASSERT(false, "Unknown renderer API!");
+
 		return nullptr;
 	}
 
@@ -21,10 +22,11 @@ namespace tr {
 	{
 		switch (Renderer::GetCurrentAPI())
 		{
-			case RendererAPI::None:		TR_CORE_ASSERT(false, "RendererAPI::None") return nullptr;
-			case RendererAPI::OpenGL:	return new OpenGLIndexBuffer(indices, count);
+			case RendererAPI::API::None:	TR_CORE_ASSERT(false, "RendererAPI::None") return nullptr;
+			case RendererAPI::API::OpenGL:	return new OpenGLIndexBuffer(indices, count);
 		}
 		TR_CORE_ASSERT(false, "Unknown renderer API!");
+
 		return nullptr;
 	}
 
