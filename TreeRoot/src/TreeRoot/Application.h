@@ -13,6 +13,8 @@
 #include "TreeRoot/Renderer/VertexArray.h"
 #include "TreeRoot/Renderer/Buffers.h"
 
+#include "TreeRoot/Renderer/Camera.h"
+
 namespace tr {
 
 	class Application
@@ -30,6 +32,8 @@ namespace tr {
 
 		inline Window& GetWindow() const { return *m_Window; }
 		inline static Application& Get() { return *s_Instance; }
+
+		inline Camera& GetMainCamera() const { return *m_MainCamera; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
@@ -43,8 +47,9 @@ namespace tr {
 		static Application* s_Instance;
 
 		/* Temporary */
-		std::unique_ptr<Shader> m_Shader;
+		std::shared_ptr<Shader> m_Shader;
 		std::shared_ptr<VertexArray> m_VertexArray;
+		std::shared_ptr<Camera> m_MainCamera;
 	};
 	
 	Application* CreateApplication();

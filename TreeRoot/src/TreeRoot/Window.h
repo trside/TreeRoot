@@ -14,7 +14,7 @@ namespace tr {
 		unsigned int Height;
 
 		WindowProps(const std::string& title = "TreeRoot Engine", unsigned int width = 1280, unsigned int height = 720)
-			:Title(title), Width(width), Height(height) {}
+			: Title(title), Width(width), Height(height) {}
 	};
 
 	class Window

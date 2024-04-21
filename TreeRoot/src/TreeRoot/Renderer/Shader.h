@@ -1,9 +1,9 @@
 #pragma once
 
-#include "TreeRoot/Renderer/Renderer.h"
-
 /* Temporary */
-/*#include "glm.hpp"
+#include <glm/glm.hpp>
+
+/*
 typedef glm::fvec1 Float;
 typedef glm::fvec2 Float2;
 typedef glm::fvec3 Float3;
@@ -22,6 +22,8 @@ namespace tr {
 	{
 	public:
 		virtual ~Shader() {}
+
+		virtual void SetUniform(const std::string& name, const glm::mat4& matrix4f) = 0;
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;

@@ -13,7 +13,7 @@ namespace tr {
 
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()
 	{
-		glDeleteBuffers(GL_ARRAY_BUFFER, &m_RendererID);
+		glDeleteBuffers(1, &m_RendererID);
 	}
 
 	void OpenGLVertexBuffer::Bind() const
@@ -42,7 +42,7 @@ namespace tr {
 
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()
 	{
-		glDeleteBuffers(GL_ELEMENT_ARRAY_BUFFER, &m_RendererID);
+		glDeleteBuffers(1, &m_RendererID);
 	}
 
 	void OpenGLIndexBuffer::Bind() const

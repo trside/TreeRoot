@@ -59,14 +59,13 @@ namespace tr {
 		for (const auto& elements : layout)
 		{
 			glEnableVertexAttribArray(index);
-			const void* offset = &elements.Offset;
 			glVertexAttribPointer(
 				index,
 				elements.Count,
 				ShaderDataTypeToGLType(elements.Type),
 				elements.Normalized ? GL_TRUE : GL_FALSE,
 				layout.GetStride(),
-				offset
+				(const void*)elements.Offset
 			);
 			index++;
 		}

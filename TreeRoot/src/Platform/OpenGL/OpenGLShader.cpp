@@ -3,6 +3,8 @@
 
 #include <glad/glad.h>
 
+#include <glm/gtc/type_ptr.hpp>
+
 namespace tr {
 
 	OpenGLShader::OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource)
@@ -113,6 +115,24 @@ namespace tr {
 	OpenGLShader::~OpenGLShader()
 	{
 		glDeleteProgram(m_RendererID);
+	}
+
+	int OpenGLShader::GetUniformLocation(const std::string& name)
+	{
+		if (m_UniformLocationsCache.find(name) != m_UniformLocationsCache.end())
+			return m_UniformLocationsCache[name];
+
+		int location = glGetUniformLocation(m_RendererID, name.c_str());
+		if (location == -1)
+			TR_CORE_WARN("Uniform: {0} is not exist.", name);
+		m_UniformLocationsCache.emplace(name, location);
+
+		return location;
+	}
+
+	void OpenGLShader::SetUniform(const std::string& name, const glm::mat4& matrix4f)
+	{
+		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix4f));
 	}
 
 	void OpenGLShader::Bind() const
