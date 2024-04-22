@@ -18,10 +18,10 @@ namespace tr {
 
 		static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray);
 	private:
-	struct SceneData
-	{
-		glm::mat4 ProjectionViewMatrix;
-	};
+		struct SceneData
+		{
+			glm::mat4 ProjectionViewMatrix;
+		};
 		static SceneData* s_SceneData;
 	};
 

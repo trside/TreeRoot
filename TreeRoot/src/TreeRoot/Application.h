@@ -9,11 +9,7 @@
 #include "TreeRoot/LayerStack.h"
 #include "TreeRoot/ImGui/ImGuiLayer.h"
 
-#include "TreeRoot/Renderer/Shader.h"
-#include "TreeRoot/Renderer/VertexArray.h"
-#include "TreeRoot/Renderer/Buffers.h"
-
-#include "TreeRoot/Renderer/Camera.h"
+#include "TreeRoot/Time.h"
 
 namespace tr {
 
@@ -32,12 +28,12 @@ namespace tr {
 
 		inline Window& GetWindow() const { return *m_Window; }
 		inline static Application& Get() { return *s_Instance; }
-
-		inline Camera& GetMainCamera() const { return *m_MainCamera; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+
+		std::unique_ptr<Time> m_Time;
 		
 		bool m_Running = true;
 
@@ -45,11 +41,6 @@ namespace tr {
 		ImGuiLayer* m_ImGuiLayer;
 
 		static Application* s_Instance;
-
-		/* Temporary */
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexArray> m_VertexArray;
-		std::shared_ptr<Camera> m_MainCamera;
 	};
 	
 	Application* CreateApplication();
