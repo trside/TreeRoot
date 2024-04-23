@@ -44,7 +44,6 @@ namespace tr {
 		Application& app = Application::Get();
 		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 
-
 		TR_CORE_ASSERT(io.BackendRendererUserData == nullptr, "Already initialized a platform backend!");
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init("#version 410");
@@ -68,10 +67,6 @@ namespace tr {
 	{
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
-
-		ImGui::Begin("DockSpaceWindow");
-		ImGui::DockSpace(ImGui::GetID("MyDockSpace"), ImVec2(0, 0), 1);
-		ImGui::End();
 	}
 
 	void ImGuiLayer::OnImGuiFrameEnd()

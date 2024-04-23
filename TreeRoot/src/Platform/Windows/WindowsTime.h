@@ -6,10 +6,10 @@
 
 namespace tr {
 
-	class OpenGLTime : public Time
+	class WindowsTime : public Time
 	{
 	public:
-		virtual ~OpenGLTime() {}
+		virtual ~WindowsTime() = default;
 
 		virtual inline float GetTime() const override { return (float)glfwGetTime(); }
 		virtual inline float GetDeltaTime() const override { return m_DeltaTime; }

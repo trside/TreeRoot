@@ -8,11 +8,11 @@ namespace tr {
 
 	Input* Input::s_Instance = new WindowsInput();
 
-	std::unique_ptr<std::unordered_map<int, bool>> WindowsInput::KeyDownTriggered = std::make_unique<std::unordered_map<int, bool>>();
-	std::unique_ptr<std::unordered_map<int, bool>> WindowsInput::KeyUpTriggered = std::make_unique<std::unordered_map<int, bool>>();
+	Scope<std::unordered_map<int, bool>> WindowsInput::KeyDownTriggered = std::make_unique<std::unordered_map<int, bool>>();
+	Scope<std::unordered_map<int, bool>> WindowsInput::KeyUpTriggered = std::make_unique<std::unordered_map<int, bool>>();
 
-	std::unique_ptr<std::unordered_map<int, bool>> WindowsInput::MouseButtonDownTriggered = std::make_unique<std::unordered_map<int, bool>>();
-	std::unique_ptr<std::unordered_map<int, bool>> WindowsInput::MouseButtonUpTriggered = std::make_unique<std::unordered_map<int, bool>>();
+	Scope<std::unordered_map<int, bool>> WindowsInput::MouseButtonDownTriggered = std::make_unique<std::unordered_map<int, bool>>();
+	Scope<std::unordered_map<int, bool>> WindowsInput::MouseButtonUpTriggered = std::make_unique<std::unordered_map<int, bool>>();
 
 	bool WindowsInput::GetKeyImpl(int keycode) const
 	{

@@ -130,7 +130,7 @@ namespace tr {
 		return location;
 	}
 
-	void OpenGLShader::SetUniform(const std::string& name, const glm::mat4& matrix4f)
+	void OpenGLShader::UploadUniform(const std::string& name, const glm::mat4& matrix4f)
 	{
 		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix4f));
 	}

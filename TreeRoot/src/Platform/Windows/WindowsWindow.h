@@ -16,13 +16,13 @@ namespace tr {
 
 		virtual void OnUpdate() override;
 
-		inline unsigned int GetWidth() const override { return m_Data.Width; }
-		inline unsigned int GetHeight() const override { return m_Data.Height; }
-		inline void* GetNativeWindow() const { return m_Window; }
+		virtual inline unsigned int GetWidth() const override { return m_Data.Width; }
+		virtual inline unsigned int GetHeight() const override { return m_Data.Height; }
+		virtual inline void* GetNativeWindow() const { return m_Window; }
 
-		inline void SetEventCallback(const EventCallbackFun& callback) override { m_Data.EventCallback = callback; }
-		void SetVSync(bool enabled) override;
-		bool IsVSync() const override;
+		virtual inline void SetEventCallback(const EventCallbackFun& callback) override { m_Data.EventCallback = callback; }
+		virtual void SetVSync(bool enabled) override;
+		virtual bool IsVSync() const override;
 
 	private:
 		virtual void Init(const WindowProps& props);

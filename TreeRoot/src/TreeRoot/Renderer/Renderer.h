@@ -13,10 +13,10 @@ namespace tr {
 		static inline const RendererAPI::API GetCurrentAPI() { return RendererAPI::GetAPI(); }
 		static void SetAPI();
 
-		static void BeginScene(const std::shared_ptr<Camera>& camera);
+		static void BeginScene(const Ref<Camera>& camera);
 		static void EndScene();
 
-		static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray);
+		static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray);
 	private:
 		struct SceneData
 		{

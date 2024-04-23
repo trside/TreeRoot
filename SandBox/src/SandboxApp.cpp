@@ -4,7 +4,7 @@ class ExampleLayer : public tr::Layer
 {
 public:
 	ExampleLayer()
-		:Layer("Example")
+		: Layer("Example")
 	{
 		std::string vertexSource = R"(
 			#version 460 core
@@ -43,8 +43,8 @@ public:
 			{ tr::ShaderDataType::Float4, "i_Color" },
 		};
 
-		std::shared_ptr<tr::VertexBuffer> vertexBuffer;
-		std::shared_ptr<tr::IndexBuffer> indexBuffer;
+		tr::Ref<tr::VertexBuffer> vertexBuffer;
+		tr::Ref<tr::IndexBuffer> indexBuffer;
 
 		float vertices[3 * (4 + 3)] = {
 			   0.0,    0.0,  0.0,  0.0,  1.0,  0.0,  1.0,
@@ -68,6 +68,7 @@ public:
 
 	virtual void OnUpdate(float deltaTime) override
 	{
+		TR_TRACE("Frame Rate: {0}fps", 1 / deltaTime);
 		tr::RenderCommand::SetClearColor({ 0.25, 0.25, 0.25, 1.0 });
 		tr::RenderCommand::Clear();
 
@@ -79,15 +80,7 @@ public:
 
 		tr::Renderer::EndScene();
 
-		if (tr::Input::GetMouseButtonDown(TR_MOUSE_BUTTON_1))
-			TR_CORE_INFO("down!!");
-		if (tr::Input::GetMouseButton(TR_MOUSE_BUTTON_1))
-			TR_CORE_INFO("hold!!");
-		if (tr::Input::GetMouseButtonUp(TR_MOUSE_BUTTON_1))
-			TR_CORE_INFO("up!!");
-
 		m_MainCamera->OnUpdate();
-
 	}
 
 	virtual void OnEvent(tr::Event& e) override
@@ -99,9 +92,9 @@ public:
 	{
 	}
 private:
-	std::shared_ptr<tr::Shader> m_Shader;
-	std::shared_ptr<tr::VertexArray> m_VertexArray;
-	std::shared_ptr<tr::Camera> m_MainCamera;
+	tr::Ref<tr::Shader> m_Shader;
+	tr::Ref<tr::VertexArray> m_VertexArray;
+	tr::Ref<tr::Camera> m_MainCamera;
 };
 
 class Sandbox : public tr::Application

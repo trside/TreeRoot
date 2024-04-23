@@ -2,7 +2,7 @@
 #include "Renderer.h"
 
 #include "RenderCommand.h"
-#include "Platform/OpenGL/OpenGLRendererAPI.h"
+#include "Platform/OpenGL/OpenGLShader.h"	// Temporary
 
 namespace tr {
 
@@ -12,7 +12,7 @@ namespace tr {
 	{
 	}
 
-	void Renderer::BeginScene(const std::shared_ptr<Camera>& camera)
+	void Renderer::BeginScene(const Ref<Camera>& camera)
 	{
 		s_SceneData->ProjectionViewMatrix = camera->GetProjectionViewMatrix();
 	}
@@ -21,10 +21,10 @@ namespace tr {
 	{
 	}
 
-	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray)
+	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray)
 	{
 		shader->Bind();
-		shader->SetUniform("u_PV", s_SceneData->ProjectionViewMatrix);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniform("u_PV", s_SceneData->ProjectionViewMatrix);
 
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed(vertexArray);

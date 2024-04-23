@@ -10,7 +10,7 @@ namespace tr {
 	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:
-		OpenGLVertexBuffer(float* vertices, unsigned int size);
+		OpenGLVertexBuffer(const float* vertices, unsigned int size);
 		virtual ~OpenGLVertexBuffer();
 
 		virtual void Bind() const override;
@@ -27,7 +27,7 @@ namespace tr {
 	class OpenGLIndexBuffer : public IndexBuffer
 	{
 	public:
-		OpenGLIndexBuffer(unsigned int* vertices, unsigned int size);
+		OpenGLIndexBuffer(const unsigned int* vertices, unsigned int size);
 		virtual ~OpenGLIndexBuffer();
 
 		virtual void Bind() const override;

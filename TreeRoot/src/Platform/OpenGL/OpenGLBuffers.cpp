@@ -4,7 +4,7 @@
 namespace tr {
 
 	/* Vertex Buffer */
-	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, unsigned int size)
+	OpenGLVertexBuffer::OpenGLVertexBuffer(const float* vertices, unsigned int size)
 	{
 		glCreateBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
@@ -32,7 +32,7 @@ namespace tr {
 	}
 
 	/* Index Buffer */
-	OpenGLIndexBuffer::OpenGLIndexBuffer(unsigned int* indicies, unsigned int count)
+	OpenGLIndexBuffer::OpenGLIndexBuffer(const unsigned int* indicies, unsigned int count)
 		: m_Count(count)
 	{
 		glCreateBuffers(1, &m_RendererID);

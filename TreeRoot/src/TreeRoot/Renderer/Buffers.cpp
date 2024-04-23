@@ -6,7 +6,7 @@
 
 namespace tr {
 
-	VertexBuffer* VertexBuffer::Create(float* vertices, unsigned int size)
+	VertexBuffer* VertexBuffer::Create(const float* vertices, unsigned int size)
 	{
 		switch (Renderer::GetCurrentAPI())
 		{
@@ -18,7 +18,7 @@ namespace tr {
 		return nullptr;
 	}
 
-	IndexBuffer* IndexBuffer::Create(unsigned int* indices, unsigned int count)
+	IndexBuffer* IndexBuffer::Create(const unsigned int* indices, unsigned int count)
 	{
 		switch (Renderer::GetCurrentAPI())
 		{

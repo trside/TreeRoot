@@ -11,7 +11,7 @@ namespace tr {
 
 		virtual void CalculateDeltaTime() = 0;
 		
-		static Time* Create();
+		static Ref<Time> Create();
 	};
 
 }

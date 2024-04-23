@@ -31,9 +31,9 @@ namespace tr {
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
-		std::unique_ptr<Window> m_Window;
+		Scope<Window> m_Window;
 
-		std::unique_ptr<Time> m_Time;
+		Ref<Time> m_Time;
 		
 		bool m_Running = true;
 
