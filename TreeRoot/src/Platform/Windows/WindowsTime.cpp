@@ -8,7 +8,7 @@ namespace tr {
         return std::make_shared<WindowsTime>();
     }
 
-    void WindowsTime::CalculateDeltaTime()
+    void WindowsTime::UpdateDeltaTime()
     {
         m_DeltaTime = GetTime() - m_LastFrameTime;
         m_LastFrameTime = GetTime();

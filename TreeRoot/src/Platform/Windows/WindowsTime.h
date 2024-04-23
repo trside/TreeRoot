@@ -14,7 +14,7 @@ namespace tr {
 		virtual inline float GetTime() const override { return (float)glfwGetTime(); }
 		virtual inline float GetDeltaTime() const override { return m_DeltaTime; }
 
-		virtual void CalculateDeltaTime() override;
+		virtual void UpdateDeltaTime() override;
 	private:
 		float m_LastFrameTime = 0.0f;
 		float m_DeltaTime = 0.0f;

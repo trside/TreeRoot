@@ -13,6 +13,8 @@ namespace tr {
         virtual void Unbind() const override;
 
         int GetUniformLocation(const std::string& name);
+        void UploadUniform(const std::string& name, int value);
+        void UploadUniform(const std::string& name, const glm::vec2& vector2);
         void UploadUniform(const std::string& name, const glm::mat4& matrix4f);
     private:
         unsigned int m_RendererID;

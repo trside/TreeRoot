@@ -6,32 +6,33 @@
 
 namespace tr {
 
-	class Camera
+	class OrthoCamera
 	{
 	public:
-		Camera(float width, float height);
-		~Camera();
+		OrthoCamera(float width, float height);
 
 		inline const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
 		inline const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
 
 		inline const glm::mat4& GetProjectionViewMatrix() const { return m_ProjectionViewMatrix; }
 
-		void SetProjectionMatrix(float width, float height);
+		inline const glm::vec2& GetPosition() const { return m_Position; }
+		inline float GetRotation() const { return m_Rotation; }
+		inline const float GetScale() const { return m_Scale; }
 
-		void Translate(const glm::vec3& position) { m_Position = position; }
-		void Rotate(float rotation) { m_Rotation = rotation; }
-		void Scaling(glm::vec2 scaling) { m_Scaling = scaling; }
+		inline void SetPosition(const glm::vec2& position) { m_Position = position; RecalculateViewMatrix(); }
+		inline void SetRotation(float rotation) { m_Rotation = rotation; RecalculateViewMatrix(); }
+		inline void SetScale(float scale) { scale = 1 / scale; m_Scale = scale < 0.0f ? 0.0f : scale; RecalculateViewMatrix(); }
 
-		void OnUpdate();	// Calculate m_ProjectionViewMatrix
+		void RecalculateViewMatrix();	// Recalculate m_ViewMatrix
 	private:
 		glm::mat4 m_ProjectionMatrix;
 		glm::mat4 m_ViewMatrix;
 		glm::mat4 m_ProjectionViewMatrix;
 
-		glm::vec3 m_Position;
+		glm::vec2 m_Position;
 		float m_Rotation;
-		glm::vec2 m_Scaling;
+		float m_Scale;
 	};
 
 }

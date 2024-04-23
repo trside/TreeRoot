@@ -12,7 +12,7 @@ namespace tr {
 	{
 	}
 
-	void Renderer::BeginScene(const Ref<Camera>& camera)
+	void Renderer::BeginScene(const Ref<OrthoCamera>& camera)
 	{
 		s_SceneData->ProjectionViewMatrix = camera->GetProjectionViewMatrix();
 	}
