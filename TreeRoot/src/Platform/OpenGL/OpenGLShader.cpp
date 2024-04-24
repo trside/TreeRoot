@@ -130,16 +130,16 @@ namespace tr {
 		return location;
 	}
 
-	void OpenGLShader::UploadUniform(const std::string& name, int value)
+	void OpenGLShader::SetShaderParameter(const std::string& name, int value)
 	{
 		glUniform1i(GetUniformLocation(name), value);
 	}
 
-	void OpenGLShader::UploadUniform(const std::string& name, const glm::vec2& vector2)
+	void OpenGLShader::SetShaderParameter(const std::string& name, const glm::vec2& vector2)
 	{
 		glUniform2fv(GetUniformLocation(name), 1, glm::value_ptr(vector2));
 	}
-	void OpenGLShader::UploadUniform(const std::string& name, const glm::mat4& matrix4f)
+	void OpenGLShader::SetShaderParameter(const std::string& name, const glm::mat4& matrix4f)
 	{
 		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix4f));
 	}

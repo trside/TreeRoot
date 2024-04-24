@@ -11,6 +11,8 @@ namespace tr {
 	class Renderer
 	{
 	public:
+		static void Init();
+
 		static inline const RendererAPI::API GetCurrentAPI() { return RendererAPI::GetAPI(); }
 		static void SetAPI();
 

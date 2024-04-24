@@ -7,6 +7,8 @@
 #include "TreeRoot/Renderer/Renderer.h"
 #include "TreeRoot/Renderer/RenderCommand.h"
 
+#include <Glad/glad.h>		// Temporary
+
 namespace tr {
 
 	Application* Application::s_Instance = nullptr;
@@ -21,6 +23,8 @@ namespace tr {
 
 		m_Time = Ref<Time>(Time::Create());
 
+		Renderer::Init();
+
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 	}
@@ -33,6 +37,7 @@ namespace tr {
 		EventDispatcher dispatcher(e);
 
 		dispatcher.Dispatch<WindowCloseEvent>(TR_BIND_EVENT(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(TR_BIND_EVENT(Application::OnWindowResized));
 
 		//TR_CORE_TRACE("{0}", e);
 
@@ -83,6 +88,12 @@ namespace tr {
 		m_Running = false;
 		return true;
 	}
-}
 
+	bool Application::OnWindowResized(WindowResizeEvent& e)
+	{
+		glViewport(0, 0, tr::Application::Get().GetWindow().GetWidth(), tr::Application::Get().GetWindow().GetHeight());
+
+		return false;
+	}
+}
 

@@ -13,9 +13,9 @@ namespace tr {
         virtual void Unbind() const override;
 
         int GetUniformLocation(const std::string& name);
-        void UploadUniform(const std::string& name, int value);
-        void UploadUniform(const std::string& name, const glm::vec2& vector2);
-        void UploadUniform(const std::string& name, const glm::mat4& matrix4f);
+        virtual void SetShaderParameter(const std::string& name, int value) override;
+        virtual void SetShaderParameter(const std::string& name, const glm::vec2& vector2) override;
+        virtual void SetShaderParameter(const std::string& name, const glm::mat4& matrix4f) override;
     private:
         unsigned int m_RendererID;
         std::unordered_map<std::string, unsigned int> m_UniformLocationsCache;

@@ -8,6 +8,11 @@ namespace tr {
 
 	Renderer::SceneData* Renderer::s_SceneData = new Renderer::SceneData();
 
+	void Renderer::Init()
+	{
+		RenderCommand::Init();
+	}
+
 	void Renderer::SetAPI()
 	{
 	}
@@ -24,7 +29,7 @@ namespace tr {
 	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray)
 	{
 		shader->Bind();
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniform("u_PV", s_SceneData->ProjectionViewMatrix);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->SetShaderParameter("u_PV", s_SceneData->ProjectionViewMatrix);
 
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed(vertexArray);

@@ -30,6 +30,7 @@ namespace tr {
 		inline static Application& Get() { return *s_Instance; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
+		bool OnWindowResized(WindowResizeEvent& e);
 
 		Scope<Window> m_Window;
 

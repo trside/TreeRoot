@@ -70,11 +70,9 @@ public:
 		m_Texture = tr::Texture::Create("assets/textures/iron_ore.png");
 		m_Texture->Bind();
 		m_Shader->Bind();
-		std::dynamic_pointer_cast<tr::OpenGLShader>(m_Shader)->UploadUniform("u_Texture", 0);
+		m_Shader->SetShaderParameter("u_Texture", 0);
 
 		m_MainCamera.reset(new tr::OrthoCamera((float)tr::Application::Get().GetWindow().GetWidth(), (float)tr::Application::Get().GetWindow().GetHeight()));
-
-		std::cout << std::endl;
 	}
 
 	virtual void OnUpdate(float deltaTime) override
@@ -152,6 +150,7 @@ public:
 		//TR_TRACE("{0}", e);
 		tr::EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<tr::MouseScrolledEvent>(TR_BIND_EVENT(ExampleLayer::OnMouseScrolled));
+		dispatcher.Dispatch<tr::WindowResizeEvent>(TR_BIND_EVENT(ExampleLayer::OnWindowResized));
 	}
 
 	virtual void OnImGuiRender() override
@@ -172,6 +171,13 @@ public:
 			m_MainCamera_Zoom = m_ZoomRatios[m_ZoomRatios_Index + 1 > 22 ? m_ZoomRatios_Index : ++m_ZoomRatios_Index];
 		else if (e.GetOffsetY() < 0)
 			m_MainCamera_Zoom = m_ZoomRatios[m_ZoomRatios_Index - 1 < 0 ? m_ZoomRatios_Index : --m_ZoomRatios_Index];
+
+		return false;
+	}
+
+	bool OnWindowResized(tr::WindowResizeEvent& e)
+	{
+		m_MainCamera->SetProjectionMatrix((float)tr::Application::Get().GetWindow().GetWidth(), (float)tr::Application::Get().GetWindow().GetHeight());
 
 		return false;
 	}

@@ -128,6 +128,11 @@ project "Sandbox"
         "TreeRoot"
     }
 
+    postbuildcommands
+    {
+        ("{COPYDIR} ../%{prj.name}/assets \"../bin/" .. outputdir .. "/Sandbox/assets/\"")
+    }
+
     filter "system:windows" 
         systemversion "latest"
 

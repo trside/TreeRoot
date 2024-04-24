@@ -4,17 +4,22 @@
 
 #include "TreeRoot/Events/Event.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace tr {
 
 	class OrthoCamera
 	{
 	public:
+		OrthoCamera(glm::vec2 matrix);
 		OrthoCamera(float width, float height);
 
 		inline const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
 		inline const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
-
 		inline const glm::mat4& GetProjectionViewMatrix() const { return m_ProjectionViewMatrix; }
+
+		inline void SetProjectionMatrix(glm::vec2 matrix) { m_ProjectionMatrix = glm::ortho(-0.5f * matrix.x, 0.5f * matrix.x, -0.5f * matrix.y, 0.5f * matrix.y, 0.0f, 1.0f); }
+		inline void SetProjectionMatrix(float width, float height) { m_ProjectionMatrix = glm::ortho(-0.5f * width, 0.5f * width, -0.5f * height, 0.5f * height, 0.0f, 1.0f); }
 
 		inline const glm::vec2& GetPosition() const { return m_Position; }
 		inline float GetRotation() const { return m_Rotation; }

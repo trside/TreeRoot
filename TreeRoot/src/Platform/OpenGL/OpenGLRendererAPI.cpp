@@ -3,6 +3,13 @@
 
 namespace tr {
 
+	void OpenGLRendererAPI::Init()
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+
+
 	void OpenGLRendererAPI::SetClearColor(const glm::vec4& clearColor)
 	{
 		glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
