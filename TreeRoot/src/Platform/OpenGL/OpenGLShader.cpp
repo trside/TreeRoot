@@ -5,67 +5,131 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-namespace tr {
+#include <fstream>
 
+namespace tr {
+	OpenGLShader::OpenGLShader(const std::string& filePath)
+	{
+		m_RendererID = CompileShader(Preprocess(ReadFile(filePath)));
+		TR_CORE_ASSERT(m_RendererID);
+	}
 	OpenGLShader::OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource)
 	{
-		// Create an empty vertex shader handle
-		GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		m_RendererID = CompileShader(Preprocess(vertexSource, fragmentSource));
+		TR_CORE_ASSERT(m_RendererID);
+	}
 
-		// Send the vertex shader source code to GL
-		// Note that std::string's .c_str is NULL character terminated.
-		const GLchar* source = (const GLchar*)vertexSource.c_str();
-		glShaderSource(vertexShader, 1, &source, 0);
+	OpenGLShader::~OpenGLShader()
+	{
+		glDeleteProgram(m_RendererID);
+	}
 
-		// Compile the vertex shader
-		glCompileShader(vertexShader);
+	int OpenGLShader::GetUniformLocation(const std::string& name)
+	{
+		if (m_UniformLocationsCache.find(name) != m_UniformLocationsCache.end())
+			return m_UniformLocationsCache[name];
 
-		GLint isCompiled = 0;
-		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled);
-		if (isCompiled == GL_FALSE)
+		int location = glGetUniformLocation(m_RendererID, name.c_str());
+		if (location == -1)
+			TR_CORE_WARN("Uniform: {0} is not exist.", name);
+		m_UniformLocationsCache.emplace(name, location);
+
+		return location;
+	}
+
+	std::string OpenGLShader::ReadFile(const std::string& filePath)
+	{
+		std::string result;
+		std::ifstream file(filePath, std::ifstream::binary);
+		if (file)
 		{
-			GLint maxLength = 0;
-			glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength);
+			file.seekg(0, file.end);
+			result.resize(file.tellg());
+			file.seekg(0, file.beg);
 
-			// The maxLength includes the NULL character
-			std::vector<GLchar> infoLog(maxLength);
-			glGetShaderInfoLog(vertexShader, maxLength, &maxLength, &infoLog[0]);
-
-			// Use the infoLog as you see fit.
-			TR_CORE_ERROR("OpenGL Shader: {0}", infoLog.data());
-			TR_CORE_ASSERT(false, "Failed to compile vertex shader!")
-
-			// In this simple program, we'll just leave
-			return;
+			file.read(result.data(), result.size());
+			file.close();
+		}
+		else
+		{
+			TR_CORE_WARN("Failed to load shader filepath: {0}", filePath);
 		}
 
-		// Create an empty fragment shader handle
-		GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+		return result;
+	}
 
-		// Send the fragment shader source code to GL
-		// Note that std::string's .c_str is NULL character terminated.
-		source = (const GLchar*)fragmentSource.c_str();
-		glShaderSource(fragmentShader, 1, &source, 0);
+	std::unordered_map<unsigned int, std::string> OpenGLShader::Preprocess(const std::string& source)
+	{
+		std::unordered_map<unsigned int, std::string> shaderSources;
 
-		// Compile the fragment shader
-		glCompileShader(fragmentShader);
+		const char* typeToken = "#type";
+		size_t typeTokenLength = strlen(typeToken);
 
-		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &isCompiled);
-		if (isCompiled == GL_FALSE)
+		size_t pos = 0;
+		std::string type;
+		while (pos != std::string::npos)
 		{
-			GLint maxLength = 0;
-			glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &maxLength);
+			pos = source.find_first_not_of("\r\n", pos) + typeTokenLength;
+			pos = source.find_first_not_of(' ', pos);
 
-			// The maxLength includes the NULL character
-			std::vector<GLchar> infoLog(maxLength);
-			glGetShaderInfoLog(fragmentShader, maxLength, &maxLength, &infoLog[0]);
+			size_t eol = source.find("\r\n", pos);
+			type = source.substr(pos, eol - pos);
+			TR_CORE_ASSERT(GetShaderTypeFromString(type), "Unknown ShaderType!");
 
-			// Use the infoLog as you see fit.
-			TR_CORE_ERROR("OpenGL Shader {0}", infoLog.data());
-			TR_CORE_ASSERT(false, "Failed to compile fragment shader!")
+			size_t begin = source.find_first_not_of("\r\n", eol);
+			pos = source.find(typeToken, begin);
 
-			// In this simple program, we'll just leave
-			return;
+			shaderSources[GetShaderTypeFromString(type)] = source.substr(begin, (pos == std::string::npos ? source.size() : pos) - begin);
+			TR_CORE_INFO("{0}:\n{1}", type, shaderSources[GetShaderTypeFromString(type)]);
+		}
+
+		return shaderSources;
+	}
+
+	std::unordered_map<unsigned int, std::string> OpenGLShader::Preprocess(const std::string& vertexSource, const std::string& fragmentSource)
+	{
+		std::unordered_map<unsigned int, std::string> shaderSources;
+		shaderSources[GetShaderTypeFromString("vertex")] = vertexSource;
+		shaderSources[GetShaderTypeFromString("fragment")] = fragmentSource;
+
+		return shaderSources;
+	}
+
+	unsigned int OpenGLShader::CompileShader(const std::unordered_map<unsigned int, std::string>& shaderSources)
+	{
+		std::vector<unsigned int> shaderIDs;
+
+		for (auto& shaderSource : shaderSources)
+		{
+			// Create an empty shader handle
+			GLuint shader = glCreateShader(shaderSource.first);
+
+			// Send the shader source code to GL
+			// Note that std::string's .c_str is NULL character terminated.
+			const GLchar* source = (const GLchar*)shaderSource.second.c_str();
+			glShaderSource(shader, 1, &source, 0);
+
+			// Compile the shader
+			glCompileShader(shader);
+
+			GLint isCompiled = 0;
+			glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
+			if (isCompiled == GL_FALSE)
+			{
+				GLint maxLength = 0;
+				glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+
+				// The maxLength includes the NULL character
+				std::vector<GLchar> infoLog(maxLength);
+				glGetShaderInfoLog(shader, maxLength, &maxLength, &infoLog[0]);
+
+				// Use the infoLog as you see fit.
+				TR_CORE_ERROR("OpenGL Shader: {0}", infoLog.data());
+				TR_CORE_ASSERT(false, "Failed to compile shader!");
+
+				break;
+			}
+			shaderIDs.push_back(shader);
 		}
 
 		// Vertex and fragment shaders are successfully compiled.
@@ -74,8 +138,8 @@ namespace tr {
 		GLuint program = glCreateProgram();
 
 		// Attach our shaders to our program
-		glAttachShader(program, vertexShader);
-		glAttachShader(program, fragmentShader);
+		for (auto& id : shaderIDs)
+			glAttachShader(program, id);
 
 		// Link our program
 		glLinkProgram(program);
@@ -97,37 +161,28 @@ namespace tr {
 
 			// Use the infoLog as you see fit.
 			TR_CORE_ERROR("OpenGL Shader: {0}", infoLog.data());
-			TR_CORE_ASSERT(false, "Failed to link shaders!")
+			TR_CORE_ASSERT(false, "Failed to link shaders!");
 
 			// In this simple program, we'll just leave
-			return;
+			return 0;
 		}
 
 		// Always detach shaders after a successful link.
-		glDetachShader(program, vertexShader);
-		glDetachShader(program, fragmentShader);
-	
+		for (auto& id : shaderIDs)
+			glDetachShader(program, id);
+
 		// Shader compilation is successful.
 
-		m_RendererID = program;
+		return program;
 	}
 
-	OpenGLShader::~OpenGLShader()
+	unsigned int OpenGLShader::GetShaderTypeFromString(const std::string& type)
 	{
-		glDeleteProgram(m_RendererID);
-	}
-
-	int OpenGLShader::GetUniformLocation(const std::string& name)
-	{
-		if (m_UniformLocationsCache.find(name) != m_UniformLocationsCache.end())
-			return m_UniformLocationsCache[name];
-
-		int location = glGetUniformLocation(m_RendererID, name.c_str());
-		if (location == -1)
-			TR_CORE_WARN("Uniform: {0} is not exist.", name);
-		m_UniformLocationsCache.emplace(name, location);
-
-		return location;
+		if (type == "vertex")
+			return GL_VERTEX_SHADER;
+		else if (type == "fragment")
+			return GL_FRAGMENT_SHADER;
+		return 0;
 	}
 
 	void OpenGLShader::SetShaderParameter(const std::string& name, int value)

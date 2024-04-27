@@ -1,7 +1,5 @@
 #include <TreeRoot.h>
 
-#include "Platform/OpenGL/OpenGLShader.h"	// Temporary
-
 class ExampleLayer : public tr::Layer
 {
 public:
@@ -39,7 +37,7 @@ public:
 			}
 		)";
 
-		m_Shader.reset(tr::Shader::Create(vertexSource, fragmentSource));
+		m_Shader = tr::Shader::Create("assets/shaders/BasicShader.glsl");
 
 		m_VertexArray.reset(tr::VertexArray::Create());
 

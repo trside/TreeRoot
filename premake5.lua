@@ -130,6 +130,7 @@ project "Sandbox"
 
     postbuildcommands
     {
+        ("{COPYDIR} ../%{prj.name}/assets \"../bin/" .. outputdir .. "/Sandbox/assets/\""),
         ("{COPYDIR} ../%{prj.name}/assets \"../bin/" .. outputdir .. "/Sandbox/assets/\"")
     }
 
