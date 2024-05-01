@@ -37,6 +37,7 @@ namespace tr {
 		Ref<Time> m_Time;
 		
 		bool m_Running = true;
+		bool m_Minimized = false;
 
 		LayerStack m_LayerStack;
 		ImGuiLayer* m_ImGuiLayer;

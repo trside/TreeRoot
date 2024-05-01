@@ -69,12 +69,17 @@ namespace tr {
 		{
 			m_Time->UpdateDeltaTime();
 
-			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate(m_Time->GetDeltaTime());
+			if (!m_Minimized)
+			{
+				for (Layer* layer : m_LayerStack)
+					layer->OnUpdate(m_Time->GetDeltaTime());
+			}
 
 			m_ImGuiLayer->OnImGuiFrameBegin();
+
 			for (Layer* layer : m_LayerStack)
 				layer->OnImGuiRender();
+
 			m_ImGuiLayer->OnImGuiFrameEnd();
 
 			Input::OnUpdate();
@@ -91,6 +96,14 @@ namespace tr {
 
 	bool Application::OnWindowResized(WindowResizeEvent& e)
 	{
+		if (e.GetWidth() == 0 || e.GetHeight() == 0)
+		{
+			m_Minimized = true;
+
+			return false;
+		}
+		m_Minimized = false;
+
 		glViewport(0, 0, tr::Application::Get().GetWindow().GetWidth(), tr::Application::Get().GetWindow().GetHeight());
 
 		return false;
