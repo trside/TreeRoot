@@ -1,4 +1,5 @@
 #pragma once
+
 #include "TreeRoot/Renderer/Shader.h"
 
 namespace tr {
@@ -12,6 +13,8 @@ namespace tr {
 
         virtual void Bind() const override;
         virtual void Unbind() const override;
+
+        virtual inline const std::string& GetName() const override { return m_Name; }
 
         virtual void SetShaderParameter(const std::string& name, int value) override;
         virtual void SetShaderParameter(const std::string& name, const glm::vec2& vector2) override;
@@ -28,6 +31,7 @@ namespace tr {
     private:
         unsigned int m_RendererID;
         std::unordered_map<std::string, unsigned int> m_UniformLocationsCache;
+        std::string m_Name;
     };
 
 }

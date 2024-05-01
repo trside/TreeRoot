@@ -6,6 +6,7 @@
 #include "TreeRoot/Log.h"
 #include "TreeRoot/Input.h"
 #include "TreeRoot/Layer.h"
+#include "TreeRoot/CameraController.h"
 
 #include "TreeRoot/Imgui/ImGuiLayer.h"
 

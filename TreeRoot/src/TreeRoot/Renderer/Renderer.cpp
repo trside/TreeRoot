@@ -2,7 +2,6 @@
 #include "Renderer.h"
 
 #include "RenderCommand.h"
-#include "Platform/OpenGL/OpenGLShader.h"	// Temporary
 
 namespace tr {
 
@@ -17,19 +16,20 @@ namespace tr {
 	{
 	}
 
-	void Renderer::BeginScene(const Ref<OrthoCamera>& camera)
+	void Renderer::BeginScene(const OrthoCamera& camera)
 	{
-		s_SceneData->ProjectionViewMatrix = camera->GetProjectionViewMatrix();
+		s_SceneData->ProjectionViewMatrix = camera.GetProjectionViewMatrix();
 	}
 
 	void Renderer::EndScene()
 	{
 	}
 
-	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray)
+	void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform)
 	{
 		shader->Bind();
-		std::dynamic_pointer_cast<OpenGLShader>(shader)->SetShaderParameter("u_PV", s_SceneData->ProjectionViewMatrix);
+		shader->SetShaderParameter("u_PV", s_SceneData->ProjectionViewMatrix);
+		shader->SetShaderParameter("u_Model", transform);
 
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed(vertexArray);

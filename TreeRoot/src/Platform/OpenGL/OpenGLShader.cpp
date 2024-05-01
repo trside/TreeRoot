@@ -11,12 +11,13 @@ namespace tr {
 	OpenGLShader::OpenGLShader(const std::string& filePath)
 	{
 		m_RendererID = CompileShader(Preprocess(ReadFile(filePath)));
-		TR_CORE_ASSERT(m_RendererID);
+		size_t lastSlash = filePath.find_last_of("/\\") + 1;
+		size_t lastDot = filePath.rfind('.');
+		m_Name = filePath.substr(lastSlash, (lastDot != std::string::npos ? lastDot : filePath.size() - 1) - lastSlash);
 	}
 	OpenGLShader::OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource)
 	{
 		m_RendererID = CompileShader(Preprocess(vertexSource, fragmentSource));
-		TR_CORE_ASSERT(m_RendererID);
 	}
 
 	OpenGLShader::~OpenGLShader()
@@ -40,7 +41,7 @@ namespace tr {
 	std::string OpenGLShader::ReadFile(const std::string& filePath)
 	{
 		std::string result;
-		std::ifstream file(filePath, std::ifstream::binary);
+		std::ifstream file(filePath, std::ifstream::in | std::ifstream::binary);
 		if (file)
 		{
 			file.seekg(0, file.end);
@@ -72,7 +73,7 @@ namespace tr {
 			pos = source.find_first_not_of("\r\n", pos) + typeTokenLength;
 			pos = source.find_first_not_of(' ', pos);
 
-			size_t eol = source.find("\r\n", pos);
+			size_t eol = source.find_first_of("\r\n", pos);	// find_xxx_of 用于查找指定字符串中的任意一个字符而非整个字符串，找到任意字符即返回位置
 			type = source.substr(pos, eol - pos);
 			TR_CORE_ASSERT(GetShaderTypeFromString(type), "Unknown ShaderType!");
 
@@ -80,7 +81,7 @@ namespace tr {
 			pos = source.find(typeToken, begin);
 
 			shaderSources[GetShaderTypeFromString(type)] = source.substr(begin, (pos == std::string::npos ? source.size() : pos) - begin);
-			TR_CORE_INFO("{0}:\n{1}", type, shaderSources[GetShaderTypeFromString(type)]);
+			//TR_CORE_INFO("{0}:\n{1}", type, shaderSources[GetShaderTypeFromString(type)]);
 		}
 
 		return shaderSources;
@@ -97,7 +98,8 @@ namespace tr {
 
 	unsigned int OpenGLShader::CompileShader(const std::unordered_map<unsigned int, std::string>& shaderSources)
 	{
-		std::vector<unsigned int> shaderIDs;
+		std::array<unsigned int, 2> shaderIDs;
+		unsigned int shaderIDsIndex = 0;
 
 		for (auto& shaderSource : shaderSources)
 		{
@@ -129,7 +131,7 @@ namespace tr {
 
 				break;
 			}
-			shaderIDs.push_back(shader);
+			shaderIDs[shaderIDsIndex++] = shader;
 		}
 
 		// Vertex and fragment shaders are successfully compiled.
@@ -138,7 +140,7 @@ namespace tr {
 		GLuint program = glCreateProgram();
 
 		// Attach our shaders to our program
-		for (auto& id : shaderIDs)
+		for (auto id : shaderIDs)
 			glAttachShader(program, id);
 
 		// Link our program
@@ -168,7 +170,7 @@ namespace tr {
 		}
 
 		// Always detach shaders after a successful link.
-		for (auto& id : shaderIDs)
+		for (auto id : shaderIDs)
 			glDetachShader(program, id);
 
 		// Shader compilation is successful.
