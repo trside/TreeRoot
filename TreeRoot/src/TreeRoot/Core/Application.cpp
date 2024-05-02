@@ -2,12 +2,10 @@
 
 #include "Application.h"
 
-#include "TreeRoot/Input.h"
+#include "TreeRoot/Core/Input.h"
 
 #include "TreeRoot/Renderer/Renderer.h"
 #include "TreeRoot/Renderer/RenderCommand.h"
-
-#include <Glad/glad.h>		// Temporary
 
 namespace tr {
 
@@ -94,7 +92,7 @@ namespace tr {
 		return true;
 	}
 
-	bool Application::OnWindowResized(WindowResizeEvent& e)
+	bool Application::OnWindowResized(WindowResizeEvent& e)		// TODO: 解决调整窗口大小时glfw暂停渲染的问题 Tips: openGL双缓冲机制
 	{
 		if (e.GetWidth() == 0 || e.GetHeight() == 0)
 		{
@@ -104,8 +102,28 @@ namespace tr {
 		}
 		m_Minimized = false;
 
-		glViewport(0, 0, tr::Application::Get().GetWindow().GetWidth(), tr::Application::Get().GetWindow().GetHeight());
+		Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+#if 0
+		/* Temporary & Dangerous!!! */
+		m_Time->UpdateDeltaTime();
 
+		if (!m_Minimized)
+		{
+			for (Layer* layer : m_LayerStack)
+				layer->OnUpdate(m_Time->GetDeltaTime());
+		}
+
+		m_ImGuiLayer->OnImGuiFrameBegin();
+
+		for (Layer* layer : m_LayerStack)
+			layer->OnImGuiRender();
+
+		m_ImGuiLayer->OnImGuiFrameEnd();
+
+		Input::OnUpdate();
+
+		m_Window->OnUpdate();
+#endif
 		return false;
 	}
 }

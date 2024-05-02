@@ -35,4 +35,9 @@ namespace tr {
 		RenderCommand::DrawIndexed(vertexArray);
 	}
 
+	void Renderer::OnWindowResize(unsigned int width, unsigned int height)
+	{
+		RenderCommand::SetViewport(0, 0, width, height);
+	}
+
 }

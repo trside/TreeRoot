@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TreeRoot/Core.h"
+#include "TreeRoot/Core/Core.h"
 #include "TreeRoot/Events/Event.h"
 
 namespace tr {

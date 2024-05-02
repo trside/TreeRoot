@@ -1,7 +1,7 @@
 #include "trpch.h"
 #include "WindowsInput.h"
 
-#include "TreeRoot/Application.h"
+#include "TreeRoot/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 namespace tr {

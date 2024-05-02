@@ -1,6 +1,6 @@
 #pragma once
 
-#include <TreeRoot/Core.h>
+#include <TreeRoot/Core/Core.h>
 
 namespace tr {
 

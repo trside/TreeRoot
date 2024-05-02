@@ -2,11 +2,11 @@
 
 // For use by TreeRoot applications
 
-#include "TreeRoot/Application.h"
-#include "TreeRoot/Log.h"
-#include "TreeRoot/Input.h"
-#include "TreeRoot/Layer.h"
-#include "TreeRoot/CameraController.h"
+#include "TreeRoot/Core/Application.h"
+#include "TreeRoot/Core/Log.h"
+#include "TreeRoot/Core/Input.h"
+#include "TreeRoot/Core/Layer.h"
+#include "TreeRoot/Core/CameraController.h"
 
 #include "TreeRoot/Imgui/ImGuiLayer.h"
 
@@ -29,4 +29,4 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 // EntryPoint
-#include "TreeRoot/EntryPoint.h"
+#include "TreeRoot/Core/EntryPoint.h"

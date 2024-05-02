@@ -46,11 +46,14 @@ public:
 		m_Texture = tr::Texture::Create("assets/textures/iron_ore.png");
 
 		m_AlphaTexture = tr::Texture::Create("assets/textures/glass_purple.png");
+
 	}
 
 	virtual void OnUpdate(float deltaTime) override
 	{
 		m_FrameRate = 1.0f / deltaTime;
+
+		TR_TRACE("m_FrameRate: {0}", m_FrameRate);
 
 		m_MainCameraController.OnUpdate(deltaTime);
 
@@ -76,6 +79,10 @@ public:
 	virtual void OnImGuiRender() override
 	{
 		m_MainCameraController.OnImGuiRender();
+
+		ImGui::Begin("AppInfo");
+		ImGui::Text("m_FrameRate: %f", m_FrameRate);
+		ImGui::End();
 	}
 private:
 	tr::ShaderLibrary m_ShaderLibrary;

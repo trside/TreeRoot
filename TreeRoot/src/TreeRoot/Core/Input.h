@@ -2,10 +2,10 @@
 
 #include "trpch.h"
 
-#include "TreeRoot/Core.h"
+#include "TreeRoot/Core/Core.h"
 
-#include "TreeRoot/KeyCodes.h"
-#include "TreeRoot/MouseButtonCodes.h"
+#include "TreeRoot/Core/KeyCodes.h"
+#include "TreeRoot/Core/MouseButtonCodes.h"
 
 namespace tr {
 

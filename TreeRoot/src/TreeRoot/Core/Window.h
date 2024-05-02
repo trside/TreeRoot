@@ -2,8 +2,8 @@
 
 #include "trpch.h"
 
-#include "TreeRoot/Core.h"
-#include "Events/Event.h"
+#include "TreeRoot/Core/Core.h"
+#include "Treeroot/Events/Event.h"
 
 namespace tr {
 

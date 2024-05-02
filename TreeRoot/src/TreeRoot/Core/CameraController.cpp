@@ -1,11 +1,11 @@
 #include "trpch.h"
 #include "CameraController.h"
 
-#include "TreeRoot/Input.h"
+#include "TreeRoot/Core/Input.h"
 
-#include "TreeRoot/Core.h"
+#include "TreeRoot/Core/Core.h"
 
-#include "TreeRoot/Application.h"
+#include "TreeRoot/Core/Application.h"
 
 #include "imgui/imgui.h"
 
@@ -21,6 +21,9 @@ namespace tr {
 
 	void OrthoCameraController::OnUpdate(float deltaTime)
 	{
+		if (Input::GetKeyDown(TR_KEY_K))
+			TR_TRACE("Jump!");
+
 		if (m_EnableRotate)
 		{
 			if (Input::GetKey(TR_KEY_Q))

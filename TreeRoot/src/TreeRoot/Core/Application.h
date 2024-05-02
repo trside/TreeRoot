@@ -1,15 +1,15 @@
 #pragma once
 
-#include "Core.h"
-#include "Window.h"
+#include "TreeRoot/Core/Core.h"
+#include "TreeRoot/Core/Window.h"
 
-#include "Events/Event.h"
-#include "Events/ApplicationEvent.h"
+#include "TreeRoot/Events/Event.h"
+#include "TreeRoot/Events/ApplicationEvent.h"
 
-#include "TreeRoot/LayerStack.h"
+#include "TreeRoot/Core/LayerStack.h"
 #include "TreeRoot/ImGui/ImGuiLayer.h"
 
-#include "TreeRoot/Time.h"
+#include "TreeRoot/Core/Time.h"
 
 namespace tr {
 

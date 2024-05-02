@@ -1,7 +1,7 @@
 #pragma once
 
-#include "TreeRoot/Core.h"
-#include "Layer.h"
+#include "TreeRoot/Core/Core.h"
+#include "TreeRoot/Core/Layer.h"
 
 namespace tr {
 

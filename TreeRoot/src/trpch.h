@@ -13,7 +13,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "TreeRoot/Log.h"
+#include "TreeRoot/Core/Log.h"
 
 #ifdef TR_PLATFORM_WINDOWS
 	#include <Windows.h>

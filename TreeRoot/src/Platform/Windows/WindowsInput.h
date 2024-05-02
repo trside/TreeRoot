@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TreeRoot/Input.h"
+#include "TreeRoot/Core/Input.h"
 
 namespace tr {
 
