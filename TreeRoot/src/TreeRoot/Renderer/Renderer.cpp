@@ -1,15 +1,31 @@
 #include "trpch.h"
 #include "Renderer.h"
 
+#include "Renderer2D.h"
 #include "RenderCommand.h"
 
 namespace tr {
 
-	Renderer::SceneData* Renderer::s_SceneData = new Renderer::SceneData();
+	struct SceneData
+	{
+		glm::mat4 ProjectionViewMatrix;
+	};
+
+	static SceneData* s_SceneData;
 
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
+		Renderer2D::Init();
+
+		s_SceneData = new SceneData();
+	}
+
+	void Renderer::Shutdown()
+	{
+		Renderer2D::Shutdown();
+
+		delete s_SceneData;
 	}
 
 	void Renderer::SetAPI()

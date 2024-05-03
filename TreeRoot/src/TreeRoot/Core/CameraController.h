@@ -10,7 +10,7 @@ namespace tr {
 	class OrthoCameraController
 	{
 	public:
-		OrthoCameraController(float horizontal, float vertical, bool rotate = false);
+		OrthoCameraController(float horizontal, float vertical, bool enableRotate = false);
 
 		inline const glm::vec2& GetPosition() const { return m_Position; }
 		inline float GetRotation() const { return m_Rotation; }
@@ -34,7 +34,6 @@ namespace tr {
 
 		bool m_EnableRotate;
 		float m_AspectRatio;
-		//float m_ZoomRatio;
 		float m_WorldWidth;
 		float m_WorldHeight;
 

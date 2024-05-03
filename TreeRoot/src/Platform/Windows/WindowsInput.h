@@ -19,11 +19,11 @@ namespace tr {
 
 		virtual void OnUpdateImpl() const override;
 	private:
-		static Scope<std::unordered_map<int, bool>> KeyDownTriggered;
-		static Scope<std::unordered_map<int, bool>> KeyUpTriggered;
+		static Scope<std::unordered_map<int, bool>> KeyDownFlags;
+		static Scope<std::unordered_map<int, bool>> KeyUpFlags;
 
-		static Scope<std::unordered_map<int, bool>> MouseButtonDownTriggered;
-		static Scope<std::unordered_map<int, bool>> MouseButtonUpTriggered;
+		static Scope<std::unordered_map<int, bool>> MouseButtonDownFlags;
+		static Scope<std::unordered_map<int, bool>> MouseButtonUpFlags;
 	};
 
 

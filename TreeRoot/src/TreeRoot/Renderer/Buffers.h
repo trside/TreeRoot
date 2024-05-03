@@ -117,7 +117,7 @@ namespace tr {
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
-		static VertexBuffer* Create(const float* vertices, unsigned int size);
+		static Ref<VertexBuffer> Create(const float* vertices, unsigned int size);
 
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 		virtual const BufferLayout& GetLayout() const = 0;
@@ -134,6 +134,6 @@ namespace tr {
 
 		virtual unsigned int GetCount() const = 0;
 
-		static IndexBuffer* Create(const unsigned int* indices, unsigned int count);
+		static Ref<IndexBuffer> Create(const unsigned int* indices, unsigned int count);
 	};
 }

@@ -32,7 +32,7 @@ namespace tr {
 
 		int location = glGetUniformLocation(m_RendererID, name.c_str());
 		if (location == -1)
-			TR_CORE_WARN("Uniform: {0} is not exist.", name);
+			TR_CORE_WARN("{0} Shader Uniform: {1} is not exist.", GetName(), name);
 		m_UniformLocationsCache.emplace(name, location);
 
 		return location;
@@ -196,6 +196,12 @@ namespace tr {
 	{
 		glUniform2fv(GetUniformLocation(name), 1, glm::value_ptr(vector2));
 	}
+
+	void OpenGLShader::SetShaderParameter(const std::string& name, const glm::vec4& vector4)
+	{
+		glUniform4fv(GetUniformLocation(name), 1, glm::value_ptr(vector4));
+	}
+
 	void OpenGLShader::SetShaderParameter(const std::string& name, const glm::mat4& matrix4f)
 	{
 		glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix4f));

@@ -5,6 +5,7 @@
 #include "TreeRoot/Core/Input.h"
 
 #include "TreeRoot/Renderer/Renderer.h"
+#include "TreeRoot/Renderer/Renderer2D.h"
 #include "TreeRoot/Renderer/RenderCommand.h"
 
 namespace tr {
@@ -28,6 +29,7 @@ namespace tr {
 	}
 	Application::~Application()
 	{
+		Renderer::Shutdown();
 	}
 
 	void Application::OnEvent(Event& e)

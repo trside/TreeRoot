@@ -11,8 +11,8 @@
 
 namespace tr {
 
-	OrthoCameraController::OrthoCameraController(float width, float height, bool rotate)		// 镜头囊括的世界的长宽（镜头控制器拥有）， 窗口长宽（事件系统传递），二者的长宽比相同，需要的是二者的比率，才能将鼠标在窗口中的操作映射到镜头上
-		: m_EnableRotate(rotate), m_Camera(width, height), m_Position({ 0.0f, 0.0f }), m_Rotation(0.0f), m_Scale(1.0f),
+	OrthoCameraController::OrthoCameraController(float width, float height, bool enableRotate)		// 镜头囊括的世界的长宽（镜头控制器拥有）， 窗口长宽（事件系统传递），二者的长宽比相同，需要的是二者的比率，才能将鼠标在窗口中的操作映射到镜头上
+		: m_EnableRotate(enableRotate), m_Camera(width, height), m_Position({ 0.0f, 0.0f }), m_Rotation(0.0f), m_Scale(1.0f),
 		  m_AspectRatio(width / height), m_WorldWidth(width), m_WorldHeight(height)
 	{
 		l_LastWindowWidth = (float)Application::Get().GetWindow().GetWidth();
@@ -21,9 +21,6 @@ namespace tr {
 
 	void OrthoCameraController::OnUpdate(float deltaTime)
 	{
-		if (Input::GetKeyDown(TR_KEY_K))
-			TR_TRACE("Jump!");
-
 		if (m_EnableRotate)
 		{
 			if (Input::GetKey(TR_KEY_Q))
@@ -66,7 +63,7 @@ namespace tr {
 
 		m_Camera.SetViewMatrix(
 			glm::inverse(
-				glm::translate(glm::mat4(1.0f), glm::vec3(m_Position, 1.0f)) *
+				glm::translate(glm::mat4(1.0f), glm::vec3(m_Position, 0.0f)) *
 				glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
 				glm::scale(glm::mat4(1.0f), glm::vec3(m_Scale, m_Scale, 1.0f))
 			)

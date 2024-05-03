@@ -18,6 +18,7 @@ namespace tr {
 
         virtual void SetShaderParameter(const std::string& name, int value) override;
         virtual void SetShaderParameter(const std::string& name, const glm::vec2& vector2) override;
+        virtual void SetShaderParameter(const std::string& name, const glm::vec4& vector4) override;
         virtual void SetShaderParameter(const std::string& name, const glm::mat4& matrix4f) override;
     private:
         int GetUniformLocation(const std::string& name);

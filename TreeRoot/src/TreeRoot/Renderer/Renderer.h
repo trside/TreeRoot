@@ -12,6 +12,7 @@ namespace tr {
 	{
 	public:
 		static void Init();
+		static void Shutdown();
 
 		static inline const RendererAPI::API GetCurrentAPI() { return RendererAPI::GetAPI(); }
 		static void SetAPI();
@@ -22,12 +23,6 @@ namespace tr {
 		static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform = glm::mat4(1.0f));
 
 		static void OnWindowResize(unsigned int width, unsigned int height);
-	private:
-		struct SceneData
-		{
-			glm::mat4 ProjectionViewMatrix;
-		};
-		static SceneData* s_SceneData;
 	};
 
 }

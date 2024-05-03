@@ -29,6 +29,7 @@ namespace tr {
 		}
 	private:
 		inline void RecalculateProjectionViewMatrix() { m_ProjectionViewMatrix = m_ProjectionMatrix * m_ViewMatrix; }
+
 		glm::mat4 m_ProjectionMatrix;
 		glm::mat4 m_ViewMatrix;
 		glm::mat4 m_ProjectionViewMatrix;

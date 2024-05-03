@@ -8,18 +8,18 @@ namespace tr {
 
 	Input* Input::s_Instance = new WindowsInput();
 
-	Scope<std::unordered_map<int, bool>> WindowsInput::KeyDownTriggered = std::make_unique<std::unordered_map<int, bool>>();
-	Scope<std::unordered_map<int, bool>> WindowsInput::KeyUpTriggered = std::make_unique<std::unordered_map<int, bool>>();
+	Scope<std::unordered_map<int, bool>> WindowsInput::KeyDownFlags = std::make_unique<std::unordered_map<int, bool>>();
+	Scope<std::unordered_map<int, bool>> WindowsInput::KeyUpFlags = std::make_unique<std::unordered_map<int, bool>>();
 
-	Scope<std::unordered_map<int, bool>> WindowsInput::MouseButtonDownTriggered = std::make_unique<std::unordered_map<int, bool>>();
-	Scope<std::unordered_map<int, bool>> WindowsInput::MouseButtonUpTriggered = std::make_unique<std::unordered_map<int, bool>>();
+	Scope<std::unordered_map<int, bool>> WindowsInput::MouseButtonDownFlags = std::make_unique<std::unordered_map<int, bool>>();
+	Scope<std::unordered_map<int, bool>> WindowsInput::MouseButtonUpFlags = std::make_unique<std::unordered_map<int, bool>>();
 
 	bool WindowsInput::GetKeyImpl(int keycode) const
 	{
 		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());	// static_cast在编译时会进行类型确认，比强制转换更安全
 		auto state = glfwGetKey(window, keycode);
 
-		auto* keyDowned = KeyDownTriggered.get();
+		auto* keyDowned = KeyDownFlags.get();
 		(*keyDowned)[keycode] = state == GLFW_PRESS || state == GLFW_REPEAT;
 
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
@@ -27,7 +27,7 @@ namespace tr {
 
 	bool WindowsInput::GetKeyDownImpl(int keycode) const
 	{
-		auto* keyDowned = KeyDownTriggered.get();
+		auto* keyDowned = KeyDownFlags.get();
 
 		if (keyDowned->find(keycode) != keyDowned->end())		// if exist
 		{
@@ -42,7 +42,7 @@ namespace tr {
 
 	bool WindowsInput::GetKeyUpImpl(int keycode) const
 	{
-		auto* keyUpped = KeyUpTriggered.get();
+		auto* keyUpped = KeyUpFlags.get();
 
 		if (keyUpped->find(keycode) != keyUpped->end())
 		{
@@ -54,7 +54,7 @@ namespace tr {
 		}
 		(*keyUpped)[keycode] = !GetKeyImpl(keycode);
 
-		auto* keyDowned = KeyDownTriggered.get();
+		auto* keyDowned = KeyDownFlags.get();
 		return (*keyDowned)[keycode] && !(*keyUpped)[keycode];
 	}
 
@@ -63,7 +63,7 @@ namespace tr {
 		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
 		auto state = glfwGetMouseButton(window, button);
 
-		auto* buttonDowned = MouseButtonDownTriggered.get();
+		auto* buttonDowned = MouseButtonDownFlags.get();
 		(*buttonDowned)[button] = state == GLFW_PRESS;
 
 		return state == GLFW_PRESS;
@@ -71,7 +71,7 @@ namespace tr {
 
 	bool WindowsInput::GetMouseButtonDownImpl(int button) const
 	{
-		auto* buttonDowned = MouseButtonDownTriggered.get();
+		auto* buttonDowned = MouseButtonDownFlags.get();
 
 		if (buttonDowned->find(button) != buttonDowned->end())
 		{
@@ -86,7 +86,7 @@ namespace tr {
 
 	bool WindowsInput::GetMouseButtonUpImpl(int button) const
 	{
-		auto* buttonUpped = MouseButtonUpTriggered.get();
+		auto* buttonUpped = MouseButtonUpFlags.get();
 
 		if (buttonUpped->find(button) != buttonUpped->end())
 		{
@@ -98,7 +98,7 @@ namespace tr {
 		}
 		(*buttonUpped)[button] = !GetMouseButtonImpl(button);
 
-		auto* buttonDowned = MouseButtonDownTriggered.get();
+		auto* buttonDowned = MouseButtonDownFlags.get();
 		return (*buttonDowned)[button] && !(*buttonUpped)[button];
 	}
 
@@ -112,25 +112,25 @@ namespace tr {
 
 	void WindowsInput::OnUpdateImpl() const
 	{
-		auto* keyDowned = KeyDownTriggered.get();
+		auto* keyDowned = KeyDownFlags.get();
 		for (auto it = keyDowned->begin(); it != keyDowned->end(); it++)
 		{	
 			if (it->second == true && GetKeyImpl(it->first) == false)
 				it->second = false;
 		}
-		auto* keyUpped = KeyUpTriggered.get();
+		auto* keyUpped = KeyUpFlags.get();
 		for (auto it = keyUpped->begin(); it != keyUpped->end(); it++)
 		{
 			if (it->second == true && GetKeyImpl(it->first) == true)
 				it->second = false;
 		}
-		auto* buttonDowned = MouseButtonDownTriggered.get();
+		auto* buttonDowned = MouseButtonDownFlags.get();
 		for (auto it = buttonDowned->begin(); it != buttonDowned->end(); it++)
 		{
 			if (it->second == true && GetMouseButtonImpl(it->first) == false)
 				it->second = false;
 		}
-		auto* buttonUpped = MouseButtonUpTriggered.get();
+		auto* buttonUpped = MouseButtonUpFlags.get();
 		for (auto it = buttonUpped->begin(); it != buttonUpped->end(); it++)
 		{
 			if (it->second == true && GetMouseButtonImpl(it->first) == true)

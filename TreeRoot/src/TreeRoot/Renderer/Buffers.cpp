@@ -6,24 +6,24 @@
 
 namespace tr {
 
-	VertexBuffer* VertexBuffer::Create(const float* vertices, unsigned int size)
+	Ref<VertexBuffer> VertexBuffer::Create(const float* vertices, unsigned int size)
 	{
 		switch (Renderer::GetCurrentAPI())
 		{
 			case RendererAPI::API::None:	TR_CORE_ASSERT(false, "RendererAPI::None") return nullptr;
-			case RendererAPI::API::OpenGL:	return new OpenGLVertexBuffer(vertices, size);
+			case RendererAPI::API::OpenGL:	return std::make_shared<OpenGLVertexBuffer>(vertices, size);
 		}
 		TR_CORE_ASSERT(false, "Unknown renderer API!");
 
 		return nullptr;
 	}
 
-	IndexBuffer* IndexBuffer::Create(const unsigned int* indices, unsigned int count)
+	Ref<IndexBuffer> IndexBuffer::Create(const unsigned int* indices, unsigned int count)
 	{
 		switch (Renderer::GetCurrentAPI())
 		{
 			case RendererAPI::API::None:	TR_CORE_ASSERT(false, "RendererAPI::None") return nullptr;
-			case RendererAPI::API::OpenGL:	return new OpenGLIndexBuffer(indices, count);
+			case RendererAPI::API::OpenGL:	return std::make_shared<OpenGLIndexBuffer>(indices, count);
 		}
 		TR_CORE_ASSERT(false, "Unknown renderer API!");
 
